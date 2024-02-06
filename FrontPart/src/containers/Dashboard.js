@@ -5,6 +5,13 @@ import { ROUTES_PATH } from '../constants/routes.js'
 import USERS_TEST from '../constants/usersTest.js'
 import Logout from "./Logout.js"
 
+
+//Ceux ci est la page ou on arrive après la connexion
+
+
+//Cette fonction filtre les factures en fonction d'un statut donné. 
+//Si les données sont présentes, elle retourne un tableau filtré, 
+//sinon elle retourne un tableau vide.
 export const filteredBills = (data, status) => {
   return (data && data.length) ?
     data.filter(bill => {
@@ -27,6 +34,10 @@ export const filteredBills = (data, status) => {
     }) : []
 }
 
+
+//Cette fonction génère une carte HTML représentant une facture donnée.
+//Elle extrait le prénom, le nom, le nom de la facture, le montant, la date et le type de la facture 
+//pour les afficher de manière structurée.
 export const card = (bill) => {
   const firstAndLastNames = bill.email.split('@')[0]
   const firstName = firstAndLastNames.includes('.') ?
@@ -51,11 +62,14 @@ export const card = (bill) => {
     </div>
   `)
 }
-
+//Cette fonction génère une chaîne de cartes HTML 
+//en utilisant la fonction card pour chaque facture dans le tableau fourni.
+// Elle renvoie une chaîne vide si le tableau de factures est vide.
 export const cards = (bills) => {
   return bills && bills.length ? bills.map(bill => card(bill)).join("") : ""
 }
-
+//Cette fonction mappe un index à un statut de facture. Elle est  utilisée pour convertir un index 
+//en un statut spécifique (en attente, accepté, refusé).
 export const getStatus = (index) => {
   switch (index) {
     case 1:
@@ -66,7 +80,10 @@ export const getStatus = (index) => {
       return "refused"
   }
 }
-
+//Cette classe semble être la pièce maîtresse du tableau de bord. 
+//Le constructeur initialise les propriétés nécessaires et attache 
+//des gestionnaires d'événements. Elle comporte également plusieurs méthodes
+// qui traitent les interactions utilisateur et effectuent des opérations sur les factures.
 export default class {
   constructor({ document, onNavigate, store, bills, localStorage }) {
     this.document = document
@@ -152,7 +169,9 @@ export default class {
     return bills
 
   }
-
+//Cette fonction récupère toutes les factures de tous les utilisateurs depuis le magasin. 
+//Elle utilise la propriété store pour obtenir la liste des factures, les formate,
+// et les renvoie sous forme de promesse.
   getBillsAllUsers = () => {
     if (this.store) {
       return this.store

@@ -96,6 +96,7 @@ export default class {
   }
 
   handleClickIconEye = () => {
+
     const billUrl = $('#icon-eye-d').attr("data-bill-url")
     const imgWidth = Math.floor($('#modaleFileAdmin1').width() * 0.8)
     $('#modaleFileAdmin1').find(".modal-body").html(`<div style='text-align: center;'><img width=${imgWidth} src=${billUrl} alt="Bill"/></div>`)
@@ -122,7 +123,7 @@ export default class {
       $('.vertical-navbar').css({ height: '120vh' })
       this.counter ++
     }
-    $('#icon-eye-d').click(this.handleClickIconEye)
+    $('#icon-eye-d').click( this.handleClickIconEye)
     $('#btn-accept-bill').click((e) => this.handleAcceptSubmit(e, bill))
     $('#btn-refuse-bill').click((e) => this.handleRefuseSubmit(e, bill))
   }
@@ -161,7 +162,11 @@ export default class {
         .html("")
       this.counter ++
     }
-
+    // Détacher les gestionnaires d'événements existants
+    bills.forEach(bill => {
+      $(`#open-bill${bill.id}`).off('click');
+  });
+  
     bills.forEach(bill => {
       $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })

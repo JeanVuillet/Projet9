@@ -26,3 +26,6 @@ All files            |    66.8 |    75.53 |   61.97 |   67.67 |
   VerticalLayout.js  |     100 |      100 |     100 |     100 |                   
 ---------------------|---------|----------|---------|---------|-------------------
 j essaye de mettre le tri dans billsUI.js mais cela me fait une erreur du coup le test ne peu pas marcher
+
+
+pour les extensions coder en js dans la methode handleChangeFile

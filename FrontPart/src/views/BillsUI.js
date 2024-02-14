@@ -5,6 +5,7 @@ import LoadingPage from "./LoadingPage.js"
 import Actions from './Actions.js'
 
 const row = (bill) => {
+
   return (`
     <tr>
       <td>${bill.type}</td>
@@ -20,7 +21,21 @@ const row = (bill) => {
   }
 
 const rows = (data) => {
-  return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
+
+  const dataSorted = data.sort(function(a, b) {
+    // Convertir les chaînes de caractères en objets Date
+
+    let dateB = new Date(b.date);
+    let dateA=new Date(a.date);
+    // Comparer les objets Date
+    if (dateA < dateB) {
+        return 1;
+    } else  {
+        return -1;
+
+} });
+  return (dataSorted && data.length) ? dataSorted.map(bill => row(bill)).join("") : ""
+
 }
 
 export default ({ data: bills, loading, error }) => {

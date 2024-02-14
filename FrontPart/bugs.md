@@ -20,3 +20,14 @@ then:la note de frais est acceptee
 Bug no5
 Given: je crée une nouvelle note de frais avec une TVA absurde( ex:>100)
 then:la note de frais est acceptee
+
+
+l3 28 Bills.js completer comme la ligne 37
+case 1 ajout testunitaire et d integration
+
+mettre a 80%
+sur kamban (
+http://127.0.0.1:8080/coverage/lcov-report/containers/Bills.js.html
+http://127.0.0.1:8080/coverage/lcov-report/containers/NewBill.js.html)
+
+Reference Bills.js

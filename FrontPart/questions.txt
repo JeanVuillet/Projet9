@@ -1,0 +1,28 @@
+pour quels bugs on cree des tests unitaires et d integration et pour lesquels ce n est pas necessaire
+Faut il tester la partie administrateur?
+Comment nettoyer la base de donnees
+
+
+Pourquoi le test Bills.js ne marche pas
+All files            |    66.8 |    75.53 |   61.97 |   67.67 |                   
+ constants           |     100 |      100 |     100 |     100 |                   
+  routes.js          |     100 |      100 |     100 |     100 |                   
+  usersTest.js       |       0 |        0 |       0 |       0 |                   
+ containers          |   60.66 |    61.02 |   51.79 |   61.73 |                   
+  Bills.js           |    35.9 |       30 |      20 |   36.11 | 14,20,24-27,36-73 
+  Dashboard.js       |   89.53 |    80.49 |      80 |   95.95 | 160-163           
+  Login.js           |   73.17 |        0 |   45.45 |   73.17 | 29,51,63-72,78-92 
+  Logout.js          |     100 |      100 |     100 |     100 |                   
+  NewBill.js         |       0 |        0 |       0 |       0 | 6-73              
+ views               |     100 |      100 |     100 |     100 |                   
+  Actions.js         |     100 |      100 |     100 |     100 |                   
+  BillsUI.js         |     100 |      100 |     100 |     100 |                   
+  DashboardFormUI.js |     100 |      100 |     100 |     100 |                   
+  DashboardUI.js     |     100 |      100 |     100 |     100 |                   
+  ErrorPage.js       |     100 |      100 |     100 |     100 |                   
+  LoadingPage.js     |     100 |      100 |     100 |     100 |                   
+  LoginUI.js         |     100 |      100 |     100 |     100 |                   
+  NewBillUI.js       |     100 |      100 |     100 |     100 |                   
+  VerticalLayout.js  |     100 |      100 |     100 |     100 |                   
+---------------------|---------|----------|---------|---------|-------------------
+j essaye de mettre le tri dans billsUI.js mais cela me fait une erreur du coup le test ne peu pas marcher

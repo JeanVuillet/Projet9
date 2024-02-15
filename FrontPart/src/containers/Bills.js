@@ -38,7 +38,7 @@ export default class {
             try {
               return {
                 ...doc,
-                // date: formatDate(doc.date),
+  
                 status: formatStatus(doc.status)
               }
             } catch(e) {
@@ -55,21 +55,21 @@ export default class {
           console.log('length', bills.length)
 
           
-          bills = bills.sort(function(a, b) {
-            // Convertir les chaînes de caractères en objets Date
+      //     bills = bills.sort(function(a, b) {
+      //       // Convertir les chaînes de caractères en objets Date
     
-            let dateB = new Date(b.date);
-            let dateA=new Date(a.date);
-            // Comparer les objets Date
-            if (dateA < dateB) {
-                return -1;
-            } else  {
-                return 1;
+      //       let dateB = new Date(b.date);
+      //       let dateA=new Date(a.date);
+      //       // Comparer les objets Date
+      //       if (dateA < dateB) {
+      //           return -1;
+      //       } else  {
+      //           return 1;
        
-       } });
-        bills.forEach(element => {
-          element.date= formatDate(element.date);
-      })
+      //  } });
+      //   bills.forEach(element => {
+      //     element.date= formatDate(element.date);
+      // })
         return bills
       })
     }

@@ -21,7 +21,7 @@ const row = (bill) => {
   }
 
 const rows = (data) => {
-
+if(data){
   var dataSorted = data.sort(function(a, b) {
     // Convertir les chaînes de caractères en objets Date
 
@@ -35,7 +35,8 @@ const rows = (data) => {
 
 } });
   return (dataSorted && data.length) ? dataSorted.map(bill => row(bill)).join("") : ""
-
+}
+  else {return (data && data.length) ? data.map(bill => row(bill)).join("") : ""}
 }
 
 export default ({ data: bills, loading, error }) => {

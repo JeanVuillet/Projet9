@@ -22,7 +22,7 @@ const row = (bill) => {
 
 const rows = (data) => {
 
-  const dataSorted = data.sort(function(a, b) {
+  var dataSorted = data.sort(function(a, b) {
     // Convertir les chaînes de caractères en objets Date
 
     let dateB = new Date(b.date);

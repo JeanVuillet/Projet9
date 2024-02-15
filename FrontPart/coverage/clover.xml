@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1707942463278" clover="3.2.0">
-  <project timestamp="1707942463278" name="All files">
-    <metrics statements="234" coveredstatements="147" conditionals="94" coveredconditionals="73" methods="71" coveredmethods="41" elements="399" coveredelements="261" complexity="0" loc="234" ncloc="234" packages="3" files="16" classes="16"/>
+<coverage generated="1708011791705" clover="3.2.0">
+  <project timestamp="1708011791705" name="All files">
+    <metrics statements="230" coveredstatements="147" conditionals="92" coveredconditionals="73" methods="71" coveredmethods="41" elements="393" coveredelements="261" complexity="0" loc="230" ncloc="230" packages="3" files="16" classes="16"/>
     <package name="constants">
       <metrics statements="8" coveredstatements="8" conditionals="5" coveredconditionals="5" methods="1" coveredmethods="1"/>
       <file name="routes.js" path="/Users/jeanvuillet/Desktop/Openclassrooms/Projet9/FrontPart/src/constants/routes.js">
@@ -20,9 +20,9 @@
       </file>
     </package>
     <package name="containers">
-      <metrics statements="192" coveredstatements="105" conditionals="57" coveredconditionals="36" methods="55" coveredmethods="25"/>
+      <metrics statements="188" coveredstatements="105" conditionals="55" coveredconditionals="36" methods="55" coveredmethods="25"/>
       <file name="Bills.js" path="/Users/jeanvuillet/Desktop/Openclassrooms/Projet9/FrontPart/src/containers/Bills.js">
-        <metrics statements="32" coveredstatements="13" conditionals="8" coveredconditionals="3" methods="9" coveredmethods="2"/>
+        <metrics statements="28" coveredstatements="13" conditionals="6" coveredconditionals="3" methods="9" coveredmethods="2"/>
         <line num="7" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
@@ -48,12 +48,8 @@
         <line num="47" count="0" type="stmt"/>
         <line num="48" count="0" type="stmt"/>
         <line num="55" count="0" type="stmt"/>
-        <line num="56" count="0" type="stmt"/>
-        <line num="59" count="0" type="stmt"/>
-        <line num="60" count="0" type="stmt"/>
-        <line num="62" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="63" count="0" type="stmt"/>
-        <line num="65" count="0" type="stmt"/>
+        <line num="68" count="0" type="stmt"/>
+        <line num="69" count="0" type="stmt"/>
         <line num="71" count="0" type="stmt"/>
       </file>
       <file name="Dashboard.js" path="/Users/jeanvuillet/Desktop/Openclassrooms/Projet9/FrontPart/src/containers/Dashboard.js">

@@ -17,10 +17,27 @@ export default class NewBill {
   }
   handleChangeFile = e => {
     e.preventDefault()
-    const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
+    var fileInput= this.document.querySelector(`input[data-testid="file"]`);
+    var file = this.document.querySelector(`input[data-testid="file"]`).files[0]
     const filePath = e.target.value.split(/\\/g)
-    const fileName = filePath[filePath.length-1]
+    var fileName = filePath[filePath.length-1]
     //ici regler l extension correct
+    const allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
+    if (!allowedExtensions.exec(fileName)) {
+        // Extension invalide, afficher un message d'erreur ou effectuer une action appropriée
+        // file.value='';
+      
+        console.error('Extension de fichier non valide. Veuillez sélectionner un fichier PNG, JPG ou JPEG.');
+
+        // Assurez-vous que le nom du fichier n'est pas affiché
+      
+      let parent=fileInput.parentNode;
+      parent.removeChild(fileInput);
+      parent.innerHTML='<input required="" type="file" class="form-control blue-border" data-testid="file" accept= .jpg .png .jpeg></input>';
+
+       
+        return;
+    }
     const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)

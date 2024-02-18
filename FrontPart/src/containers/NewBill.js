@@ -26,14 +26,15 @@ export default class NewBill {
     if (!allowedExtensions.exec(fileName)) {
         // Extension invalide, afficher un message d'erreur ou effectuer une action appropriée
         // file.value='';
-      
-        console.error('Extension de fichier non valide. Veuillez sélectionner un fichier PNG, JPG ou JPEG.');
-
+      fileInput.value='';
+       alert('Extension de fichier non valide. Veuillez sélectionner un fichier PNG, JPG ou JPEG.');
+      //  fileInput.setAttribute('accept', '.jpg, .png, .jpeg');
         // Assurez-vous que le nom du fichier n'est pas affiché
       
-      let parent=fileInput.parentNode;
-      parent.removeChild(fileInput);
-      parent.innerHTML='<input required="" type="file" class="form-control blue-border" data-testid="file" accept= .jpg .png .jpeg></input>';
+
+
+
+
 
        
         return;

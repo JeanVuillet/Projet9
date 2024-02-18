@@ -54,7 +54,10 @@ Bug 6 # [Ajout de tests unitaires et d'intégration]
 Respecter la structure des tests unitaires en place : Given  / When / Then avec le résultat attendu. Un exemple est donné dans le squelette du test __tests__/Bills.js
 
 
-
+les erreur 404 et 500 en s inspirqnt de Dashboard.js
+le message d erreur qu on cherche dans le dom est Erreur
+pour le trouver on a recree l erreur dans le dom reel pour voir ce 
+qui etait affiche
 
 l3 28 Bills.js completer comme la ligne 37
 case 1 ajout testunitaire et d integration

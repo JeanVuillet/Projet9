@@ -177,26 +177,57 @@ export default class {
 //Cette fonction récupère toutes les factures de tous les utilisateurs depuis le magasin. 
 //Elle utilise la propriété store pour obtenir la liste des factures, les formate,
 // et les renvoie sous forme de promesse.
+  // getBillsAllUsers = () => {
+  //   if (this.store) {
+  //     return this.store
+  //     .bills()
+  //     .list()
+  //     .then(snapshot => {
+  //       const bills = snapshot
+  //       .map(doc => ({
+  //         id: doc.id,
+  //         ...doc,
+  //         date: doc.date,
+  //         status: doc.status
+  //       }))
+  //       return bills
+  //     })
+  //     .catch(error => {
+  //       throw error;
+  //     })
+  //   }
+  // }
+
+  //ERROR
+
+
+
+
   getBillsAllUsers = () => {
     if (this.store) {
       return this.store
-      .bills()
-      .list()
-      .then(snapshot => {
-        const bills = snapshot
-        .map(doc => ({
-          id: doc.id,
-          ...doc,
-          date: doc.date,
-          status: doc.status
-        }))
-        return bills
-      })
-      .catch(error => {
-        throw error;
-      })
+        .bills()
+        .list()
+        .then(snapshot => {
+          const bills = snapshot
+            .map(doc => ({
+              id: doc.id,
+              ...doc,
+              date: doc.date,
+              status: doc.status
+            }))
+          return bills
+        })
+        .catch(error => {
+          // Simuler une erreur 404
+          const notFoundError = new Error('Not Found');
+          notFoundError.status = 404;
+          throw notFoundError;
+        })
     }
   }
+
+
 
   // not need to cover this function by tests
   /* istanbul ignore next */

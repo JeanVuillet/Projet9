@@ -27,23 +27,69 @@ export default class {
     $('#modaleFile').modal('show')
   }
 
+  // getBills = () => {
+  //   if (this.store) {
+  //     return this.store
+  //     .bills()
+  //     .list()
+  //     .then(snapshot => {
+  //       var bills = snapshot
+  //         .map(doc => {
+  //           try {
+  //             return {
+  //               ...doc,
+  
+  //               status: formatStatus(doc.status)
+  //             }
+  //           } catch(e) {
+  //             // if for some reason, corrupted data was introduced, we manage here failing formatDate function
+  //             // log the error and return unformatted date in that case
+  //             console.log(e,'for',doc)
+  //             return {
+  //               ...doc,
+  //               date: doc.date,
+  //               status: formatStatus(doc.status)
+  //             }
+  //           }
+  //         })
+  //         console.log('length', bills.length)
+
+          
+  //     //     bills = bills.sort(function(a, b) {
+  //     //       // Convertir les chaînes de caractères en objets Date
+    
+  //     //       let dateB = new Date(b.date);
+  //     //       let dateA=new Date(a.date);
+  //     //       // Comparer les objets Date
+  //     //       if (dateA < dateB) {
+  //     //           return -1;
+  //     //       } else  {
+  //     //           return 1;
+       
+  //     //  } });
+  //     //   bills.forEach(element => {
+  //     //     element.date= formatDate(element.date);
+  //     // })
+  //       return bills
+  //     })
+  //   }
+  // }
   getBills = () => {
     if (this.store) {
       return this.store
       .bills()
       .list()
       .then(snapshot => {
+        // Si la liste des factures est récupérée avec succès, formatez les données
         var bills = snapshot
           .map(doc => {
             try {
               return {
                 ...doc,
-  
                 status: formatStatus(doc.status)
               }
             } catch(e) {
-              // if for some reason, corrupted data was introduced, we manage here failing formatDate function
-              // log the error and return unformatted date in that case
+              // Gérer les données corrompues
               console.log(e,'for',doc)
               return {
                 ...doc,
@@ -52,26 +98,14 @@ export default class {
               }
             }
           })
-          console.log('length', bills.length)
 
-          
-      //     bills = bills.sort(function(a, b) {
-      //       // Convertir les chaînes de caractères en objets Date
-    
-      //       let dateB = new Date(b.date);
-      //       let dateA=new Date(a.date);
-      //       // Comparer les objets Date
-      //       if (dateA < dateB) {
-      //           return -1;
-      //       } else  {
-      //           return 1;
-       
-      //  } });
-      //   bills.forEach(element => {
-      //     element.date= formatDate(element.date);
-      // })
-        return bills
+//         // Vous pouvez simuler une erreur 404 ici
+        throw new Error("Erreur 404: Impossible de récupérer la liste des factures");
+
+//         // Retournez les factures (ne sera pas exécuté en cas d'erreur)
+        return bills;
       })
     }
-  }
+}
+
 }

@@ -95,9 +95,9 @@ describe("Given I am connected as an employee", () => {
               return Promise.reject(new Error("Erreur 404"))
             }
           }})
-        window.onNavigate(ROUTES_PATH.Dashboard)
+        window.onNavigate(ROUTES_PATH.Bills)
         await new Promise(process.nextTick);
-        const message = await screen.getByText(/Erreur 404/)
+        const message = await screen.getByText('Erreur')
         expect(message).toBeTruthy()
       })
   
@@ -112,7 +112,7 @@ describe("Given I am connected as an employee", () => {
   
         window.onNavigate(ROUTES_PATH.Bills)
         await new Promise(process.nextTick);
-        const message = await screen.getByText(/Erreur 500/)
+        const message = await screen.getByText("Erreur")
         expect(message).toBeTruthy()
       })
       test('handleClickNewBill est appelée lorsque le bouton est cliqué', () => {

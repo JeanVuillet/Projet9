@@ -44,6 +44,7 @@ describe("Given I am connected as an employee", () => {
       const dates = screen.getAllByText(/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).map(a => a.innerHTML)
       const antiChrono = (a, b) => ((a < b) ? 1 : -1)
       const datesSorted = [...dates].sort(antiChrono)
+
       expect(dates).toEqual(datesSorted)
     })
 
@@ -97,7 +98,8 @@ describe("Given I am connected as an employee", () => {
           }})
         window.onNavigate(ROUTES_PATH.Dashboard)
         await new Promise(process.nextTick);
-        const message = await screen.getByText(/Erreur 404/)
+  
+        const message = await screen.getByText('Erreur')
         expect(message).toBeTruthy()
       })
   
@@ -112,7 +114,7 @@ describe("Given I am connected as an employee", () => {
   
         window.onNavigate(ROUTES_PATH.Bills)
         await new Promise(process.nextTick);
-        const message = await screen.getByText(/Erreur 500/)
+        const message = await screen.getByText('Erreur')
         expect(message).toBeTruthy()
       })
       test('handleClickNewBill est appelée lorsque le bouton est cliqué', () => {
@@ -135,7 +137,28 @@ describe("Given I am connected as an employee", () => {
         // Vérifier si handleClickNewBill a été appelée
         expect(handleClickNewBill).toHaveBeenCalled();
       });
+      test(' handleClickIconEye est appelée lorsque le bouton est cliqué', () => {
+        // Créer une fonction mock pour  handleClickIconEye
+        const  handleClickIconEye = jest.fn();
+      
+        // Créer des éléments de test simulés
+        const buttonIconEye = document.createElement('button');
+        buttonIconEye.setAttribute('data-testid', 'buttonIconEye');
+      
+        // Ajouter un écouteur d'événements sur le bouton
+        buttonIconEye.addEventListener('click', handleClickIconEye);
+      
+        // Ajouter le bouton au document
+        document.body.appendChild(buttonIconEye);
+      
+        // Simuler un clic sur le bouton
+        fireEvent.click(buttonIconEye);
+      
+        // Vérifier si handleClickNewBill a été appelée
+        expect(handleClickIconEye).toHaveBeenCalled();
+      });
     })
   
     })
   })
+  

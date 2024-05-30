@@ -2,6 +2,7 @@
 Bug1 [Bug Hunt] - Bills
 on ne peut pas afficher les justificatifs
 explication: seul les justificatif au bon format peuvent s afficher il faut donc forcer l utilisateur a utiliser le bon format
+dans container/NewBill.js
 
 Bug 2 [Bug report] - Bills
 classer les bills par ordre d anciennete

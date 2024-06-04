@@ -162,6 +162,8 @@ export default class {
         .html("")
       this.counter ++
     }
+    //BUG ICI
+    
     // Détacher les gestionnaires d'événements existants
     bills.forEach(bill => {
       $(`#open-bill${bill.id}`).off('click');

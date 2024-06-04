@@ -3,3 +3,7 @@ pour les extensions coder en js dans la methode handleChangeFile
 
 la correction apporte dans billsUI.js l 28 permet de reussir le test mais pas de trier le DOM
 en revanche le trie l61 de bills.js trie le DOM mais ne permet pas de passer le test
+
+
+suivre point par point le kanban et le coverage sur le navigateur
+ecrir pour chaque fonction dans le  bon fichier et comporendre bien ce que fait la fonction

@@ -241,6 +241,10 @@ describe('Given I am connected as Admin and I am on Dashboard page and I clicked
 })
 
 // test d'intégration GET Modele du Dashbord
+//MOn MOdele pour faire l etape d apres le test d integration de bills.
+// et newBills ou je couvre et je fait 
+// creer des mocks des fausses donnees que je met en entree du test pour simuler les vrais
+
 describe("Given I am a user connected as Admin", () => {
   describe("When I navigate to Dashboard", () => {
     test("fetches bills from mock API GET", async () => {

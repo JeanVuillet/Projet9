@@ -99,6 +99,7 @@ describe("Given I am connected as an employee", () => {
       });
     });
 
+    // TEST D INTEGRATION GET DE BILLS
     describe("When I navigate to billList", () => {
       test("fetches bills from mock API GET", async () => {
         localStorage.setItem(
@@ -164,6 +165,7 @@ describe("Given I am connected as an employee", () => {
         });
       });
     });
+    //FIN DU TEST D INTEGRATION
 
     describe("When I click on New Bill button", () => {
       test("handleClickNewBill is called", () => {

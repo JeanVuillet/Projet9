@@ -3,19 +3,24 @@ import Logout from './Logout.js';
 
 export default class NewBill {
   constructor({ document, onNavigate, store, localStorage }) {
+    // ajout des proprietes document onNavigate et store  au nouvel objet
     this.document = document;
     this.onNavigate = onNavigate;
     this.store = store;
+    //recuperation du formulaire et ajout d un eventLIstener au submit =>handleSubmit()
     const formNewBill = this.document.querySelector(`form[data-testid="form-new-bill"]`);
     formNewBill.addEventListener("submit", this.handleSubmit);
+    // recuperation de l input du formulaire et ajout d un eventLIstener au change =>handleChanteFile
     const file = this.document.querySelector(`input[data-testid="file"]`);
     file.addEventListener("change", this.handleChangeFile);
+    // ajout des proprietes fileURl fileName billId et logout
     this.fileUrl = null;
     this.fileName = null;
     this.billId = null;
     new Logout({ document, localStorage, onNavigate });
   }
 
+  //Recuperation du file ajoutee par l utilisateur pour verifier l extension
   handleChangeFile = e => {
     e.preventDefault();
     var fileInput = this.document.querySelector(`input[data-testid="file"]`);

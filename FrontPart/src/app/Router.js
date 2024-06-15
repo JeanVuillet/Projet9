@@ -25,17 +25,24 @@ export default () => {
       rootDiv.innerHTML = ROUTES({ pathname })
       document.body.style.backgroundColor="#0E5AE5"
       new Login({ document, localStorage, onNavigate, PREVIOUS_LOCATION, store })
+      // cas ou l url est Bills
     } else if (pathname === ROUTES_PATH['Bills']) {
+      // generation de la premiere version de la page (loading le temps que les bills arrivent)
       rootDiv.innerHTML = ROUTES({ pathname, loading: true })
       const divIcon1 = document.getElementById('layout-icon1')
       const divIcon2 = document.getElementById('layout-icon2')
+      // activation de la classe sur l icone des bills et desactivation de la classe de l icone newBills 
+      // pour que le hilight soit conforme a la page courrante
       divIcon1.classList.add('active-icon')
       divIcon2.classList.remove('active-icon')
+      //creation d un objet bills pour pouvoir utiliser getBills dessus et recuperer les bills
       const bills = new Bills({ document, onNavigate, store, localStorage  })
       bills.getBills().then(data => {
+        //utilisation de BillsUI() sur les bills recuperer  afin de generer l html correspondant et injection de cet html au div root
         rootDiv.innerHTML = BillsUI({ data })
         const divIcon1 = document.getElementById('layout-icon1')
         const divIcon2 = document.getElementById('layout-icon2')
+        // realumage de l icone car la page a ete rechargee depuis zero
         divIcon1.classList.add('active-icon')
         divIcon2.classList.remove('active-icon')
         new Bills({ document, onNavigate, store, localStorage })
@@ -43,8 +50,12 @@ export default () => {
         rootDiv.innerHTML = ROUTES({ pathname, error })
       })
     } else if (pathname === ROUTES_PATH['NewBill']) {
+      // injection de la page newBills dans  le div root
+
       rootDiv.innerHTML = ROUTES({ pathname, loading: true })
+      //Creation d un Object newBills
       new NewBill({ document, onNavigate, store, localStorage })
+      // allumage de l icone newBills et extinction de l icone Bills
       const divIcon1 = document.getElementById('layout-icon1')
       const divIcon2 = document.getElementById('layout-icon2')
       divIcon1.classList.remove('active-icon')

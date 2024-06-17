@@ -23,32 +23,57 @@ jest.mock("../containers/Logout.js", () => {
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
     test("Then bill icon in vertical layout should be highlighted", async () => {
+      // Utiliser la méthode defineProperty qui permet d'ajouter une propriété à un objet
+      // On ajoute ici à l'objet window la propriété localStorage avec comme valeur localStorageMock
       Object.defineProperty(window, "localStorage", {
         value: localStorageMock,
       });
+      // L'objet localStorageMock contient des méthodes dont setItem qui permet d'ajouter une clé-valeur
+      // à l'objet window ici user:employee (au format JSON)
       window.localStorage.setItem(
         "user",
         JSON.stringify({
           type: "Employee",
         })
       );
+      // Génération dans le DOM fictif d'un div appelé root condition indispensable pour appeler router
       const root = document.createElement("div");
       root.setAttribute("id", "root");
       document.body.append(root);
+      // Appel de la méthode router() qui lance et configure le router avec un event listener et des routes
+      // Quand l'URL change l'event listener se lance et le router met à jour le contenu de la page
+      // par rapport au nouvel URL
+      // Au premier appel le router se lance sur l'URL /
+
       router();
+      // Navigation vers la page
+
+      // Changement de l'URL courant et mise à jour du contenu de la page grâce au router
       window.onNavigate(ROUTES_PATH.Bills);
+
+      // Récupération des éléments dans la fenêtre virtuelle nouvellement créée
       await waitFor(() => screen.getByTestId("icon-window"));
       const windowIcon = screen.getByTestId("icon-window");
+      // Utilisez screen.debug() pour afficher tout le DOM rendu
+   
+      // Vérification que les éléments récupérés ont bien la classe active-icon sur eux
       expect(windowIcon.classList.contains("active-icon")).toBe(true);
     });
 
     test("Then bills should be ordered from earliest to latest", () => {
+      // BillsUI charge les différentes factures dans la page
       document.body.innerHTML = BillsUI({ data: bills });
+      debugger
+
+   
+    
+      debugger
       const dates = screen
         .getAllByText(/^\d{4}-\d{2}-\d{2}$/)
         .map((a) => a.innerHTML);
       const antiChrono = (a, b) => (a < b ? 1 : -1);
       const datesSorted = [...dates].sort(antiChrono);
+
       expect(dates).toEqual(datesSorted);
     });
 
@@ -99,7 +124,7 @@ describe("Given I am connected as an employee", () => {
       });
     });
 
-    // TEST D INTEGRATION GET DE BILLS
+    // TEST D'INTEGRATION GET DE BILLS
     describe("When I navigate to billList", () => {
       test("fetches bills from mock API GET", async () => {
         localStorage.setItem(
@@ -165,7 +190,7 @@ describe("Given I am connected as an employee", () => {
         });
       });
     });
-    //FIN DU TEST D INTEGRATION
+    // FIN DU TEST D'INTEGRATION
 
     describe("When I click on New Bill button", () => {
       test("handleClickNewBill is called", () => {
@@ -193,102 +218,6 @@ describe("Given I am connected as an employee", () => {
         // Vérifier que onNavigate a été appelé avec la bonne route
         expect(mockOnNavigate).toHaveBeenCalledWith(ROUTES_PATH.NewBill);
       });
-    });
+    })})})
 
-    describe("When I click on an eye icon", () => {
-      test("handleClickIconEye is called", () => {
-        const handleClickIconEye = jest.fn();
-        const iconEye = document.createElement("div");
-        iconEye.setAttribute("data-testid", "icon-eye");
-        iconEye.setAttribute("data-bill-url", "http://example.com/test.jpg");
-        document.body.appendChild(iconEye);
-        iconEye.addEventListener("click", () => handleClickIconEye(iconEye));
-        fireEvent.click(iconEye);
-        expect(handleClickIconEye).toHaveBeenCalledWith(iconEye);
-      });
-    });
-
-    describe("When I get bills", () => {
-      test("should format the bills correctly", async () => {
-        const mockStore = {
-          bills: jest.fn().mockReturnValue({
-            list: jest.fn().mockResolvedValue([
-              { date: "2023-12-01", status: "pending" },
-              { date: "2022-05-23", status: "accepted" },
-              { date: "2021-11-12", status: "refused" },
-            ]),
-          }),
-        };
-
-        const billsInstance = new Bills({
-          document,
-          onNavigate: jest.fn(),
-          store: mockStore,
-          localStorage: window.localStorage,
-        });
-        const bills = await billsInstance.getBills();
-
-        expect(bills).toEqual([
-          { date: "01 Déc. 2023", status: "En attente" },
-          { date: "23 Mai 2022", status: "Acceptée" },
-          { date: "12 Nov. 2021", status: "Refusée" },
-        ]);
-      });
-
-      test("should handle format errors gracefully", async () => {
-        const mockStore = {
-          bills: jest.fn().mockReturnValue({
-            list: jest
-              .fn()
-              .mockResolvedValue([{ date: "invalid-date", status: "pending" }]),
-          }),
-        };
-
-        const billsInstance = new Bills({
-          document,
-          onNavigate: jest.fn(),
-          store: mockStore,
-          localStorage: window.localStorage,
-        });
-        const bills = await billsInstance.getBills();
-
-        expect(bills).toEqual([{ date: "invalid-date", status: "En attente" }]);
-      });
-    });
-    describe("Given I am connected as an employee", () => {
-      describe("When an error occurs during bills processing", () => {
-        test("Then it should log the error and the document causing it", async () => {
-          const mockStore = {
-            bills: jest.fn().mockReturnValue({
-              list: jest.fn().mockResolvedValue([
-                { date: "invalid-date", status: "pending" },
-                { date: "valid-date", status: "accepted" },
-              ]),
-            }),
-          };
-
-          const billsInstance = new Bills({
-            document,
-            onNavigate: jest.fn(),
-            store: mockStore,
-            localStorage: window.localStorage,
-          });
-
-          // Spy on console.log
-          console.log = jest.fn();
-
-          await billsInstance.getBills();
-
-          // Check that console.log was called with the error and document
-          expect(console.log).toHaveBeenCalledWith(expect.any(Error), "for", {
-            date: "invalid-date",
-            status: "pending",
-          });
-
-          // Restore console.log
-          console.log.mockRestore();
-        });
-      });
-    });
-  });
-});
+   

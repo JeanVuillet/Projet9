@@ -27,6 +27,7 @@ export default class {
     $('#modaleFile').modal('show')
   }
 
+  //quand on est sur bills le router appel getBills
   getBills = () => {
     if (this.store) {
       return this.store
@@ -53,25 +54,33 @@ export default class {
             }
           })
           console.log('length', bills.length)
-
-          
-          bills = bills.sort(function(a, b) {
+// sorting bills
+          bills =sortBills(bills);  
+          function sortBills(bills){
+            const sortBills=bills.sort((a, b)=> {
             // Convertir les chaînes de caractères en objets Date
-    
             let dateB = new Date(b.date);
             let dateA=new Date(a.date);
             // Comparer les objets Date
             if (dateA < dateB) {
-                return -1;
-            } else  {
-                return 1;
-       
-       } });
+                return -1;}
+                 else  {return 1;} 
+                                               })
+          return sortBills
+          }
+
+    
+
+      //formating dates of bills
+     bills= formatBills(bills);
+      function formatBills(bills){
         bills.forEach(element => {
           element.date= formatDate(element.date);
       })
+    }
         return bills
-      })
+      });
+ 
     }
   }
 }

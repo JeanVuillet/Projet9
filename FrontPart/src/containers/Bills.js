@@ -16,8 +16,11 @@ export default class {
     new Logout({ document, localStorage, onNavigate })
   }
 
-  handleClickNewBill = () => {
+   handleClickNewBill = () => {
     this.onNavigate(ROUTES_PATH['NewBill'])
+ 
+
+    
   }
 
   handleClickIconEye = (icon) => {
@@ -54,6 +57,7 @@ export default class {
             }
           })
           console.log('length', bills.length)
+          // debut des tests
 // sorting bills
           bills =sortBills(bills);  
           function sortBills(bills){

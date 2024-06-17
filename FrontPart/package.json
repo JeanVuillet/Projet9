@@ -1,9 +1,9 @@
 {
   "scripts": {
-    "test": "jest --coverage --reporters=default --reporters=jest-html-reporter --testEnvironment jsdom"
+    "test": "jest --coverage --reporters=default --reporters=jest-html-reporter --reporters=jest-html-reporters --testEnvironment=jsdom"
   },
   "jest": {
-    "verbose": false,
+    "verbose": true, 
     "setupFiles": [
       "./setup-jest.js"
     ],
@@ -14,6 +14,12 @@
       "!**/external/**",
       "!**/fixtures/**",
       "!**/lcov-report/**"
+    ],
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "html"
     ],
     "testEnvironment": "jsdom",
     "preset": "jest-puppeteer"

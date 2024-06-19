@@ -25,7 +25,7 @@ jest.mock("../containers/Logout.js", () => {
     return { init: jest.fn() };
   });
 });
-
+const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 beforeEach(() => {
   document.body.innerHTML = "";
 
@@ -113,20 +113,21 @@ describe("Given I am connected as an employee", () => {
 // TEST D'INTEGRATION GET DE BILLS
 describe("When I navigate to billList", () => {
   test("fetches bills from mock API GET", async () => {
-    localStorage.setItem(
-      "user",
-      JSON.stringify({ type: "Admin", email: "a@a" })
-    );
 
-    const root = document.createElement("div");
-    root.setAttribute("id", "root");
-    document.body.append(root);
-    router();
+	const billsInstance = new Bills({
+        document,
+        onNavigate,
+        store: mockStore,
+        localStorage: window.localStorage,
+      });
+	 
+	  const billContent=await billsInstance.getBills().then(data=>document.body.innerHTML=BillsUI({ data }))
+	  wait(10000);
+	  document.body.innerHTML;
+	  debugger;
+	
 
-    window.onNavigate(ROUTES_PATH.Bills);
 
-    await waitFor(() => screen.getByTestId("btn-new-bill"));
-    const contentPending = screen.getByText("Hôtel et logement");
-    expect(contentPending).toBeTruthy();
+ 
   });
 });

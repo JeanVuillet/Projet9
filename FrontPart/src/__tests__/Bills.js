@@ -30,14 +30,17 @@ beforeEach(() => {
   document.body.innerHTML = "";
 
   // SIMULATION DU LOCALSTORAGE
-  Object.defineProperty(window, "localStorage", {
-    value: localStorageMock,
-  });
+  jest.spyOn(mockStore, "bills")
+  Object.defineProperty(window, 
+    "localStorage",
+     {value: localStorageMock,}
+    );
   window.localStorage.clear();
   window.localStorage.setItem(
     "user",
     JSON.stringify({
       type: "Employee",
+      email:"a@a"
     })
   );
 
@@ -114,18 +117,23 @@ describe("Given I am connected as an employee", () => {
 describe("When I navigate to billList", () => {
   test("fetches bills from mock API GET", async () => {
 
-	const billsInstance = new Bills({
-        document,
-        onNavigate,
-        store: mockStore,
-        localStorage: window.localStorage,
-      });
+
+
+
+	// const billsInstance = new Bills({
+  //       document,
+  //       onNavigate,
+  //       store: mockStore,
+  //       localStorage: window.localStorage,
+  //     });
 	 
-	  const billContent=await billsInstance.getBills().then(data=>document.body.innerHTML=BillsUI({ data }))
-	  wait(10000);
-	  document.body.innerHTML;
-	  debugger;
-	
+	//   const billContent=await billsInstance.getBills();
+
+  await waitFor(() => {
+    const result = screen.getAllByText('Hôtel et logement');
+    expect(result).toBeTruthy();
+  });
+
 
 
  

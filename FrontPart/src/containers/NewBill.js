@@ -25,25 +25,20 @@ export default class NewBill {
     const fileName = filePath[filePath.length-1];
 
     let errorDiv = this.document.querySelector(`div[data-testid="errorDiv"]`);
+    if(errorDiv){
+      errorDiv.remove();
+    }
     if (!this.fileValidation(file) && (!errorDiv)) {
 
       fileInput.value = '';
-       errorDiv=this.document.createElement('div');
+    let errorDiv=this.document.createElement('div');
       errorDiv.textContent='extension non valide.  Veuillez sélectionner un fichier PNG, JPG ou JPEG.';
       errorDiv.style.color='red';
       errorDiv.setAttribute('data-testid', 'errorDiv')
           // Insérer le message d'erreur dans le DOM après le champ de téléchargement de fichier
     fileInput.parentNode.insertBefore(errorDiv, fileInput.nextSibling);
 
-   
-    setTimeout(() => {
-      errorDiv.remove();
-    }, 5000); // Supprime le message après 5 secondes (5000 millisecondes)
-    
-
-      return;
     }
-
     const formData = new FormData();
     const email = JSON.parse(localStorage.getItem("user")).email;
     formData.append('file', file);
@@ -82,6 +77,12 @@ export default class NewBill {
       status: 'pending'
     };
 
+    if (bill)
+{const parent=this.document.getElementById('btn-send-bill');
+  const div=this.document.createElement('div')
+  div.textContent('billCreated');
+  parent.append(div);
+}   
     if (!this.fileName) return;
     this.updateBill(bill);
     this.onNavigate(ROUTES_PATH['Bills']);

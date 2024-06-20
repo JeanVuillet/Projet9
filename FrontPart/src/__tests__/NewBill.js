@@ -88,6 +88,38 @@ describe("Given I am connected as an employee", () => {
             expect(error).toBeTruthy(); 
           });
         });
+        describe("when i fill de form and i click the button, a newBill should be created",async()=>{
+await waitFor(()=>{screen.getByTestId('expense-type')})
+let type = screen.getByTestId('expense-type');
+await userEvent.selectOptions(type, 'Transports');
+await waitFor(()=>{screen.getByTestId('expense-type')})
+let name = screen.getByTestId('expense-name');
+await userEvent.type(name, 'taxi');
+
+await waitFor(()=>{screen.getByTestId('datepicker')})
+let date = screen.getByTestId('datepicker');
+await userEvent.type(date, '1986-11-21'); 
+
+await waitFor(()=>{screen.getByTestId('amount')})
+let amount = screen.getByTestId('expense-name');
+await userEvent.type(amount, '100');
+
+await waitFor(()=>{screen.getByTestId('vat')})
+let vat = screen.getByTestId('vat');
+await userEvent.type(vat, '7');
+
+await waitFor(()=>{screen.getByTestId('pct')})
+let pct = screen.getByTestId('pct');
+await userEvent.type(pct, '9');
+await waitFor(()=>{screen.getByTestId('file')})
+const fileInput = screen.getByTestId('file');
+userEvent.upload(fileInput, new File([''], 'myfile.png', { type: 'application/png' })); 
+
+await waitFor(screen.getByText('Envoyer'));
+const validButton= screen.getByText('Envoyer')
+userEvent.click(validButton);
+await waitFor( )
+        })
       });
     })})});
 

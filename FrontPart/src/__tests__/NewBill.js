@@ -54,11 +54,42 @@ describe("Given I am connected as an employee", () => {
   describe("When I am on NewBill Page", () => {
     test("Then newBillsForm should be visible", async () => {
       let form;
-    form=screen.getByTestId("form-new-bill")
+      form = screen.getByTestId("form-new-bill");
 
-expect(form).toBeTruthy(); 
-      debugger
+      expect(form).toBeTruthy(); 
+
       //to-do write assertion
-    })
-  })
-})
+    });
+    describe("Given I am connected as an employee", () => {
+      describe("When I am on NewBill Page", () => {
+        // ... (Le reste du code de setup) ...
+    
+        describe("when I change theFile and extension is incorrect", () => {
+          test("Then errorDiv should popUp", async () => {
+     
+            // Attendre que la page NewBill soit complètement chargée
+            await waitFor(() => {
+              const fileInput = screen.getByTestId('file');
+              return fileInput; 
+            });
+    
+            // Simuler le changement de fichier avec une extension incorrecte
+            const fileInput = screen.getByTestId('file');
+             userEvent.upload(fileInput, new File([''], 'myfile.pdf', { type: 'application/pdf' })); 
+    
+            // Attendre que l'élément d'erreur soit rendu
+            let error;
+            debugger
+            await waitFor(() => { 
+              error = screen.getByTestId('errorDiv'); 
+        
+            });
+    
+            expect(error).toBeTruthy(); 
+          });
+        });
+      });
+    })})});
+
+    
+

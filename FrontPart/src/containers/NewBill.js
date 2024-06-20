@@ -24,10 +24,23 @@ export default class NewBill {
     const filePath = e.target.value.split(/\\/g);
     const fileName = filePath[filePath.length-1];
 
-    if (!this.fileValidation(file)) {
+    let errorDiv = this.document.querySelector(`div[data-testid="errorDiv"]`);
+    if (!this.fileValidation(file) && (!errorDiv)) {
+
       fileInput.value = '';
-      this.document.createElement()
-      alert('Extension de fichier non valide. Veuillez sélectionner un fichier PNG, JPG ou JPEG.');
+       errorDiv=this.document.createElement('div');
+      errorDiv.textContent='extension non valide.  Veuillez sélectionner un fichier PNG, JPG ou JPEG.';
+      errorDiv.style.color='red';
+      errorDiv.setAttribute('data-testid', 'errorDiv')
+          // Insérer le message d'erreur dans le DOM après le champ de téléchargement de fichier
+    fileInput.parentNode.insertBefore(errorDiv, fileInput.nextSibling);
+
+   
+    setTimeout(() => {
+      errorDiv.remove();
+    }, 5000); // Supprime le message après 5 secondes (5000 millisecondes)
+    
+
       return;
     }
 

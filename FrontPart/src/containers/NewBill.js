@@ -77,12 +77,7 @@ export default class NewBill {
       status: 'pending'
     };
 
-    if (bill)
-{const parent=this.document.getElementById('btn-send-bill');
-  const div=this.document.createElement('div')
-  div.textContent('billCreated');
-  parent.append(div);
-}   
+  
     if (!this.fileName) return;
     this.updateBill(bill);
     this.onNavigate(ROUTES_PATH['Bills']);

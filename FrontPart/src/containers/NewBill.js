@@ -5,6 +5,7 @@ export default class NewBill {
   constructor({ document, onNavigate, store, localStorage }) {
     this.document = document;
     this.onNavigate = onNavigate;
+    //le store de app
     this.store = store;
     const formNewBill = this.document.querySelector(`form[data-testid="form-new-bill"]`);
     formNewBill.addEventListener("submit", this.handleSubmit);
@@ -25,6 +26,7 @@ export default class NewBill {
 
     if (!this.fileValidation(file)) {
       fileInput.value = '';
+      this.document.createElement()
       alert('Extension de fichier non valide. Veuillez sélectionner un fichier PNG, JPG ou JPEG.');
       return;
     }

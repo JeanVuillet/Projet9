@@ -68,7 +68,8 @@ export default class NewBill {
 
   handleSubmit = e => {
     e.preventDefault();
-    const email = JSON.parse(localStorage.getItem("user")).email;
+    const user=localStorage.getItem("user");
+    const email =  JSON.parse(JSON.parse(user)).email;
 
     const bill = {
       email,
@@ -84,7 +85,7 @@ export default class NewBill {
       status: 'pending'
     };
 
-  debugger;
+
     if (!this.fileName) return;
    
     this.updateBill(bill);

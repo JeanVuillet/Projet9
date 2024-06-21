@@ -59,7 +59,7 @@ export default class NewBill {
       .then(({fileUrl, key}) => {
         this.billId = key;
         this.fileUrl = fileUrl;
-        debugger;
+     
         this.fileName = fileName;
       })
       .catch(error => console.error(error));

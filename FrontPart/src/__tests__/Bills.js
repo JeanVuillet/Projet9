@@ -119,16 +119,6 @@ describe("When I navigate to billList", () => {
 
 
 
-
-	// const billsInstance = new Bills({
-  //       document,
-  //       onNavigate,
-  //       store: mockStore,
-  //       localStorage: window.localStorage,
-  //     });
-	 
-	//   const billContent=await billsInstance.getBills();
-
   await waitFor(() => {
     const result = screen.getAllByText('Hôtel et logement');
     expect(result).toBeTruthy();

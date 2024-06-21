@@ -98,8 +98,8 @@ describe("Given I am connected as an employee", () => {
         });
 
         describe("when I change the file and the extension is correct",()=>{
-          test("then the fill should be send to dataBase",async()=>{
-                       // Espionner la méthode create de mockedBills
+          test("then an object with correct values should be created",async()=>{
+             // Espionner la méthode create de mockedBills
         
              // Attendre que la page NewBill soit complètement chargée
              await waitFor(() => {
@@ -115,12 +115,41 @@ describe("Given I am connected as an employee", () => {
     
      
 
-
-         
-
+//creation d un objet FormData
+const formData = new FormData();
+formData.append('file', new File([''], 'correctfile.png', { type: 'application/png' }));
+formData.append('email', 'a@a');
 
           //attendre que la fonction soit appellee
-          await waitFor(() => expect(mockStore.bills().create).toHaveBeenCalled());
+       () => expect(mockStore.bills().create).toHaveBeenCalledWith({
+            data: formData,
+            headers: { noContentType: true },
+          });
+          });
+
+          test("then the fill should be send to dataBase",async()=>{
+      
+             // Attendre que la page NewBill soit complètement chargée
+             await waitFor(() => {
+              const fileInput = screen.getByTestId('file');
+              return fileInput; 
+            });
+      
+  
+            // Simuler le changement de fichier avec une extension correcte
+            const fileInput = screen.getByTestId('file');
+      
+             userEvent.upload(fileInput, new File([''], 'correctfile.png', { type: 'application/png' })); 
+    
+     
+
+//creation d un objet FormData
+const formData = new FormData();
+formData.append('file', new File([''], 'correctfile.png', { type: 'application/png' }));
+formData.append('email', 'a@a');
+
+          //attendre que la fonction soit appellee
+          await waitFor(() => expect(mockStore.bills().create).toHaveBeenCalled())
 
           // Attendre que la promesse arrive  (Récupérer la promesse résolue)
           const result = await mockStore.bills().create.mock.results[0].value;
@@ -131,96 +160,124 @@ describe("Given I am connected as an employee", () => {
           })
        
 
-        test("when i fill de form and i click the button, a newBill should be created",async()=>{
-        
-
-
-          await waitFor(() => screen.getByTestId('expense-type'));
-          let type = screen.getByTestId('expense-type');
-          await userEvent.selectOptions(type, 'Transports');
-    
-          await waitFor(() => screen.getByTestId('expense-name'));
-          let name = screen.getByTestId('expense-name');
-          await userEvent.type(name, 'taxi');
-    
-          await waitFor(() => screen.getByTestId('datepicker'));
-          let date = screen.getByTestId('datepicker');
-          await userEvent.type(date, '1986-11-21'); 
-    
-          await waitFor(() => screen.getByTestId('amount'));
-          let amount = screen.getByTestId('amount'); // Corrigé : expense-name -> amount
-          await userEvent.type(amount, '100');
-    
-          await waitFor(() => screen.getByTestId('vat'));
-          let vat = screen.getByTestId('vat');
-          await userEvent.type(vat, '7');
-    
-          await waitFor(() => screen.getByTestId('pct'));
-          let pct = screen.getByTestId('pct');
-          await userEvent.type(pct, '9');
-    
-          await waitFor(() => screen.getByTestId('file'));
-          const fileInput = screen.getByTestId('file');
-          await userEvent.upload(fileInput, new File(['testFile'], 'myfile.png', { type: 'application/png' })); 
-
-
-    document.body.innerHTML;
-
-
-     
-
-
-          // Vérifications après le clic sur le bouton
-  
-            // // Vérifie que tous les champs sont remplis
-            // expect(screen.getByTestId('expense-type'));
-            // expect(screen.getByTestId('expense-name')).toHaveValue('taxi');
-            // expect(screen.getByTestId('datepicker'));
-            // expect(screen.getByTestId('amount'));
-            // expect(screen.getByTestId('vat'));
-            // expect(screen.getByTestId('pct'));
-    
-      await waitFor(()=> {   screen.getAllByText('Envoyer')})
-
-      //creation d une instance newBill
-      const instance= new NewBill({ document, onNavigate, store, localStorage });
-
-
-      const myFileInput = screen.getByTestId('file');
-     
-      userEvent.upload(myFileInput, new File([''], 'correctfile.png', { type: 'application/png' })); 
-
-
-
-  
-      jest.spyOn(instance,'handleSubmit');
-      jest.spyOn(instance, 'updateBill');
-      const form= await screen.getByTestId('form-new-bill');
-      form.addEventListener('submit',(e)=>instance.handleSubmit(e));
-
-      const bill={ 
-        email:"a@a",
-        type:'Transports',
-        name:'taxi',
-        amount:100,
-        date:'1986-11-21',
-        vat:'7',
-        pct:9,
-        commentary:'',
-        fileUrl:"https://localhost:3456/images/test.jpg",
-        fileName:'correctfile.png',
-        status:'pending'
-
-      }
-      debugger;
-      await fireEvent.submit(form);
       
+            test("a newBill object with correct values  should be created",async()=>{
+
+              document.body.innerHTML;
+
+              await waitFor(() => screen.getByTestId('expense-type'));
+              let type = screen.getByTestId('expense-type');
+              await userEvent.selectOptions(type, 'Transports');
+        
+              await waitFor(() => screen.getByTestId('expense-name'));
+              let name = screen.getByTestId('expense-name');
+              await userEvent.type(name, 'taxi');
+        
+              await waitFor(() => screen.getByTestId('datepicker'));
+              let date = screen.getByTestId('datepicker');
+              await userEvent.type(date, '1986-11-21'); 
+        
+              await waitFor(() => screen.getByTestId('amount'));
+              let amount = screen.getByTestId('amount'); // Corrigé : expense-name -> amount
+              await userEvent.type(amount, '100');
+        
+              await waitFor(() => screen.getByTestId('vat'));
+              let vat = screen.getByTestId('vat');
+              await userEvent.type(vat, '7');
+        
+              await waitFor(() => screen.getByTestId('pct'));
+              let pct = screen.getByTestId('pct');
+              await userEvent.type(pct, '9');
+        
+              await waitFor(() => screen.getByTestId('file'));
+              const fileInput = screen.getByTestId('file');
+              await userEvent.upload(fileInput, new File(['testFile'], 'myfile.png', { type: 'application/png' })); 
+    
+    
+      
+    
+    
+         
+    
+    
+           
+        
+          await waitFor(()=> {   screen.getAllByText('Envoyer')})
+    
+          //creation d une instance newBill
+          const instance= new NewBill({ document, onNavigate, store, localStorage });
+    
+    
+          const myFileInput = screen.getByTestId('file');
+         
+          userEvent.upload(myFileInput, new File([''], 'correctfile.png', { type: 'application/png' })); 
+    
+    
+    
+      
+          jest.spyOn(instance,'handleSubmit');
+          jest.spyOn(instance, 'updateBill');
+          const form= await screen.getByTestId('form-new-bill');
+          form.addEventListener('submit',(e)=>instance.handleSubmit(e));
+    
+          const bill={ 
+            email:"a@a",
+            type:'Transports',
+            name:'taxi',
+            amount:100,
+            date:'1986-11-21',
+            vat:'7',
+            pct:9,
+            commentary:'',
+            fileUrl:"https://localhost:3456/images/test.jpg",
+            fileName:'correctfile.png',
+            status:'pending'
+    
+          }
+      
+          await fireEvent.submit(form);
+          
+              document.body.innerHTML;
+              expect(instance.handleSubmit).toHaveBeenCalled();
+              await waitFor( ()=>expect(instance.handleSubmit).toHaveBeenCalled())
+              expect(instance.updateBill).toHaveBeenCalledWith(bill);
+              document.body.innerHTML='';
+        });
+     
+        test("the new object should be sent to dataBase",async()=>{
           document.body.innerHTML;
-          expect(instance.handleSubmit).toHaveBeenCalled();
-          await waitFor( ()=>expect(instance.handleSubmit).toHaveBeenCalled())
-          expect(instance.updateBill).toHaveBeenCalledWith(bill);
-    })
-    })})})})});
+          debugger;
+          jest.spyOn(mockStore.bills(), "update");
+        // attente de l implementation du dom
+
+        await waitFor(() => screen.getByTestId('expense-type'));
+          await waitFor(()=> {   screen.getAllByText('Envoyer')})
+         document.body.innerHTML;
+
+          //creation d une instance newBill
+          const instance= new NewBill({ document, onNavigate, store, localStorage });
+    
+    
+          const myFileInput = screen.getByTestId('file');
+         
+          userEvent.upload(myFileInput, new File([''], 'correctfile.png', { type: 'application/png' })); 
+    
+         instance.updateBill()
+
+          await waitFor(() => expect(mockStore.bills().update).toHaveBeenCalled())
+
+          // Attendre que la promesse arrive  (Récupérer la promesse résolue)
+          const result = await mockStore.bills().create.mock.results[0].value;
+
+             expect(mockStore.bills().update).toHaveBeenCalled();
+             expect(result.vaut).toEqual("80")
+    
+          })
+
+        })
+          })
+
+    })})});
 
     
 

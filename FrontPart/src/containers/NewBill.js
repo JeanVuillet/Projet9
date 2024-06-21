@@ -39,8 +39,12 @@ export default class NewBill {
     fileInput.parentNode.insertBefore(errorDiv, fileInput.nextSibling);
 
     }
+    else{
     const formData = new FormData();
-    const email = JSON.parse(localStorage.getItem("user")).email;
+    const user=localStorage.getItem("user");
+
+    const email = JSON.parse(JSON.parse(user)).email;
+
     formData.append('file', file);
     formData.append('email', email);
 
@@ -58,6 +62,7 @@ export default class NewBill {
         this.fileName = fileName;
       })
       .catch(error => console.error(error));
+    }
   };
 
   handleSubmit = e => {

@@ -20,10 +20,13 @@ import store from "../__mocks__/store.js";
 import NewBillUI from "../views/NewBillUI.js"
 import NewBill from "../containers/NewBill.js"
 
+
+//cette methode permet de lancer mokStore a la place de store
 jest.mock("../app/store", () => mockStore);
 
 
 beforeEach(() => {
+  //cette methode permet d espionner la methode create de bills du mockstore
   jest.spyOn(mockStore.bills(), "create");
   document.body.innerHTML = "";
 
@@ -32,18 +35,12 @@ beforeEach(() => {
 // Mock the store
 
 
-  Object.defineProperty(window, 
-    "localStorage",
-     {value: localStorageMock,}
-    );
+  Object.defineProperty(window, "localStorage",{value: localStorageMock,});
   window.localStorage.clear();
-  window.localStorage.setItem(
-    "user",
-    JSON.stringify({
-      type: "Employee",
-      email:"a@a"
-    })
-  );
+window.localStorage.setItem("user", JSON.stringify({type: "Employee", email: "a@a"}));
+  
+
+
 
   // SIMULATION DU DOM
   const root = document.createElement("div");
@@ -103,15 +100,29 @@ describe("Given I am connected as an employee", () => {
               const fileInput = screen.getByTestId('file');
               return fileInput; 
             });
-
-
-
+      
+  
             // Simuler le changement de fichier avec une extension correcte
             const fileInput = screen.getByTestId('file');
-            debugger;
+        
              userEvent.upload(fileInput, new File([''], 'correctfile.png', { type: 'application/png' })); 
     
+     
+
+
+         
+
+
+          debugger
+          //attendre que la fonction soit appellee
+          await waitFor(() => expect(mockStore.bills().create).toHaveBeenCalled());
+
+          // Attendre que la promesse arrive  (Récupérer la promesse résolue)
+          const result = await mockStore.bills().create.mock.results[0].value;
+
              expect(mockStore.bills().create).toHaveBeenCalled();
+             expect(result.fileUrl).toEqual("https://localhost:3456/images/test.jpg")
+             expect(result.key).toEqual("1234")
           })
        
     //     // })

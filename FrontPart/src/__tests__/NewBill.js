@@ -82,7 +82,8 @@ describe("Given I am connected as an employee", () => {
     
             // Simuler le changement de fichier avec une extension incorrecte
             const fileInput = screen.getByTestId('file');
-             userEvent.upload(fileInput, new File([''], 'myfile.pdf', { type: 'application/pdf' })); 
+   
+             userEvent.upload(fileInput, new File([], 'myfile.pdf', { type: 'application/pdf' })); 
     
             // Attendre que l'élément d'erreur soit rendu
             let error;
@@ -109,7 +110,7 @@ describe("Given I am connected as an employee", () => {
   
             // Simuler le changement de fichier avec une extension correcte
             const fileInput = screen.getByTestId('file');
-        
+      
              userEvent.upload(fileInput, new File([''], 'correctfile.png', { type: 'application/png' })); 
     
      
@@ -161,11 +162,12 @@ describe("Given I am connected as an employee", () => {
           await waitFor(() => screen.getByTestId('file'));
           const fileInput = screen.getByTestId('file');
           await userEvent.upload(fileInput, new File(['testFile'], 'myfile.png', { type: 'application/png' })); 
+
+
     document.body.innerHTML;
 
 
-          await waitFor(() => screen.getByText('Envoyer'));
-          const validButton = screen.getByText('Envoyer');
+     
 
 
           // Vérifications après le clic sur le bouton
@@ -182,15 +184,41 @@ describe("Given I am connected as an employee", () => {
 
       //creation d une instance newBill
       const instance= new NewBill({ document, onNavigate, store, localStorage });
-      jest.spyOn(instance,'handleSubmit');
 
+
+      const myFileInput = screen.getByTestId('file');
+     
+      userEvent.upload(myFileInput, new File([''], 'correctfile.png', { type: 'application/png' })); 
+
+
+
+  
+      jest.spyOn(instance,'handleSubmit');
+      jest.spyOn(instance, 'updateBill');
       const form= await screen.getByTestId('form-new-bill');
       form.addEventListener('submit',(e)=>instance.handleSubmit(e));
 
+      const bill={ 
+        email:"a@a",
+        type:'Transports',
+        name:'taxi',
+        amount:100,
+        date:'1986-11-21',
+        vat:'7',
+        pct:9,
+        commentary:'',
+        fileUrl:"https://localhost:3456/images/test.jpg",
+        fileName:'correctfile.png',
+        status:'pending'
+
+      }
+      debugger;
       await fireEvent.submit(form);
       
           document.body.innerHTML;
           expect(instance.handleSubmit).toHaveBeenCalled();
+          await waitFor( ()=>expect(instance.handleSubmit).toHaveBeenCalled())
+          expect(instance.updateBill).toHaveBeenCalledWith(bill);
     })
     })})})})});
 

@@ -21,8 +21,8 @@ export default class NewBill {
     e.preventDefault();
     var fileInput = this.document.querySelector(`input[data-testid="file"]`);
     var file = this.document.querySelector(`input[data-testid="file"]`).files[0];
-    const filePath = e.target.value.split(/\\/g);
-    const fileName = filePath[filePath.length-1];
+
+    const fileName = file.name;
 
     let errorDiv = this.document.querySelector(`div[data-testid="errorDiv"]`);
     if(errorDiv){
@@ -59,6 +59,7 @@ export default class NewBill {
       .then(({fileUrl, key}) => {
         this.billId = key;
         this.fileUrl = fileUrl;
+        debugger;
         this.fileName = fileName;
       })
       .catch(error => console.error(error));
@@ -68,6 +69,7 @@ export default class NewBill {
   handleSubmit = e => {
     e.preventDefault();
     const email = JSON.parse(localStorage.getItem("user")).email;
+
     const bill = {
       email,
       type: e.target.querySelector(`select[data-testid="expense-type"]`).value,
@@ -82,8 +84,9 @@ export default class NewBill {
       status: 'pending'
     };
 
-  
+  debugger;
     if (!this.fileName) return;
+   
     this.updateBill(bill);
     this.onNavigate(ROUTES_PATH['Bills']);
   };

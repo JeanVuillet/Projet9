@@ -14,6 +14,7 @@ import $ from "jquery";
 import { formatDate, formatStatus } from "../app/format.js";
 import userEvent from "@testing-library/user-event";
 
+
 import store from "../__mocks__/store.js";
 
 
@@ -50,6 +51,10 @@ window.localStorage.setItem("user", JSON.stringify({type: "Employee", email: "a@
 
   // Changement de l'URL courant et mise à jour du contenu de la page grâce au router
   window.onNavigate(ROUTES_PATH.NewBill);
+  // Obtenir la référence de l'instance
+
+
+
 });
 
 describe("Given I am connected as an employee", () => {
@@ -113,7 +118,6 @@ describe("Given I am connected as an employee", () => {
          
 
 
-          debugger
           //attendre que la fonction soit appellee
           await waitFor(() => expect(mockStore.bills().create).toHaveBeenCalled());
 
@@ -125,61 +129,69 @@ describe("Given I am connected as an employee", () => {
              expect(result.key).toEqual("1234")
           })
        
-    //     // })
-    //     test("when i fill de form and i click the button, a newBill should be created",async()=>{
-    //       await waitFor(() => screen.getByTestId('expense-type'));
-    //       let type = screen.getByTestId('expense-type');
-    //       await userEvent.selectOptions(type, 'Transports');
-    
-    //       await waitFor(() => screen.getByTestId('expense-name'));
-    //       let name = screen.getByTestId('expense-name');
-    //       await userEvent.type(name, 'taxi');
-    
-    //       await waitFor(() => screen.getByTestId('datepicker'));
-    //       let date = screen.getByTestId('datepicker');
-    //       await userEvent.type(date, '1986-11-21'); 
-    
-    //       await waitFor(() => screen.getByTestId('amount'));
-    //       let amount = screen.getByTestId('amount'); // Corrigé : expense-name -> amount
-    //       await userEvent.type(amount, '100');
-    
-    //       await waitFor(() => screen.getByTestId('vat'));
-    //       let vat = screen.getByTestId('vat');
-    //       await userEvent.type(vat, '7');
-    
-    //       await waitFor(() => screen.getByTestId('pct'));
-    //       let pct = screen.getByTestId('pct');
-    //       await userEvent.type(pct, '9');
-    
-    //       await waitFor(() => screen.getByTestId('file'));
-    //       const fileInput = screen.getByTestId('file');
-    //       await userEvent.upload(fileInput, new File(['testFile'], 'myfile.png', { type: 'application/png' })); 
-    // document.body.innerHTML;
-    // debugger
 
-    //       await waitFor(() => screen.getByText('Envoyer'));
-    //       const validButton = screen.getByText('Envoyer');
+        test("when i fill de form and i click the button, a newBill should be created",async()=>{
+        
 
 
-    //       // Vérifications après le clic sur le bouton
+          await waitFor(() => screen.getByTestId('expense-type'));
+          let type = screen.getByTestId('expense-type');
+          await userEvent.selectOptions(type, 'Transports');
+    
+          await waitFor(() => screen.getByTestId('expense-name'));
+          let name = screen.getByTestId('expense-name');
+          await userEvent.type(name, 'taxi');
+    
+          await waitFor(() => screen.getByTestId('datepicker'));
+          let date = screen.getByTestId('datepicker');
+          await userEvent.type(date, '1986-11-21'); 
+    
+          await waitFor(() => screen.getByTestId('amount'));
+          let amount = screen.getByTestId('amount'); // Corrigé : expense-name -> amount
+          await userEvent.type(amount, '100');
+    
+          await waitFor(() => screen.getByTestId('vat'));
+          let vat = screen.getByTestId('vat');
+          await userEvent.type(vat, '7');
+    
+          await waitFor(() => screen.getByTestId('pct'));
+          let pct = screen.getByTestId('pct');
+          await userEvent.type(pct, '9');
+    
+          await waitFor(() => screen.getByTestId('file'));
+          const fileInput = screen.getByTestId('file');
+          await userEvent.upload(fileInput, new File(['testFile'], 'myfile.png', { type: 'application/png' })); 
+    document.body.innerHTML;
+
+
+          await waitFor(() => screen.getByText('Envoyer'));
+          const validButton = screen.getByText('Envoyer');
+
+
+          // Vérifications après le clic sur le bouton
   
-    //         // // Vérifie que tous les champs sont remplis
-    //         // expect(screen.getByTestId('expense-type'));
-    //         // expect(screen.getByTestId('expense-name')).toHaveValue('taxi');
-    //         // expect(screen.getByTestId('datepicker'));
-    //         // expect(screen.getByTestId('amount'));
-    //         // expect(screen.getByTestId('vat'));
-    //         // expect(screen.getByTestId('pct'));
+            // // Vérifie que tous les champs sont remplis
+            // expect(screen.getByTestId('expense-type'));
+            // expect(screen.getByTestId('expense-name')).toHaveValue('taxi');
+            // expect(screen.getByTestId('datepicker'));
+            // expect(screen.getByTestId('amount'));
+            // expect(screen.getByTestId('vat'));
+            // expect(screen.getByTestId('pct'));
     
-    //   await waitFor(()=> {   screen.getAllByAltText('Envoyer')})
-    //   const button= screen.getAllByAltText('Envoyer');
-    // await   userEvent.click(button);
-    //   await waitFor(()=>{ screen.getByText('billCreated')})
-    //       document.body.innerHTML;
+      await waitFor(()=> {   screen.getAllByText('Envoyer')})
+
+      //creation d une instance newBill
+      const instance= new NewBill({ document, onNavigate, store, localStorage });
+      jest.spyOn(instance,'handleSubmit');
+
+      const form= await screen.getByTestId('form-new-bill');
+      form.addEventListener('submit',(e)=>instance.handleSubmit(e));
+
+      await fireEvent.submit(form);
       
-          
-    //       expect(button).toBeTruthy();
-    // })
+          document.body.innerHTML;
+          expect(instance.handleSubmit).toHaveBeenCalled();
+    })
     })})})})});
 
     

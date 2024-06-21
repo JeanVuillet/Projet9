@@ -162,7 +162,7 @@ formData.append('email', 'a@a');
 
       
             test("a newBill object with correct values  should be created",async()=>{
-
+        debugger;
               document.body.innerHTML;
 
               await waitFor(() => screen.getByTestId('expense-type'));
@@ -241,10 +241,14 @@ formData.append('email', 'a@a');
               expect(instance.handleSubmit).toHaveBeenCalled();
               await waitFor( ()=>expect(instance.handleSubmit).toHaveBeenCalled())
               expect(instance.updateBill).toHaveBeenCalledWith(bill);
-              document.body.innerHTML='';
+           
         });
-     
-        test("the new object should be sent to dataBase",async()=>{
+        //ce test permet de nettoyer????
+        test("test",async()=>{
+          document.body.innerHTML;
+          debugger;
+        })
+        test("the new object should be sent to dataBase and the response sould be the mocked response",async()=>{
           document.body.innerHTML;
           debugger;
           jest.spyOn(mockStore.bills(), "update");
@@ -261,16 +265,30 @@ formData.append('email', 'a@a');
           const myFileInput = screen.getByTestId('file');
          
           userEvent.upload(myFileInput, new File([''], 'correctfile.png', { type: 'application/png' })); 
-    
+    debugger;
          instance.updateBill()
 
           await waitFor(() => expect(mockStore.bills().update).toHaveBeenCalled())
 
           // Attendre que la promesse arrive  (Récupérer la promesse résolue)
-          const result = await mockStore.bills().create.mock.results[0].value;
+          const result = await mockStore.bills().update.mock.results[0].value;
 
              expect(mockStore.bills().update).toHaveBeenCalled();
-             expect(result.vaut).toEqual("80")
+             expect(result).toEqual({
+              "id": "47qAXb6fIm2zOKkLzMro",
+              "vat": "80",
+              "fileUrl": "https://firebasestorage.googleapis.com/v0/b/billable-677b6.a…f-1.jpg?alt=media&token=c1640e12-a24b-4b11-ae52-529112e9602a",
+              "status": "pending",
+              "type": "Hôtel et logement",
+              "commentary": "séminaire billed",
+              "name": "encore",
+              "fileName": "preview-facture-free-201801-pdf-1.jpg",
+              "date": "2004-04-04",
+              "amount": 400,
+              "commentAdmin": "ok",
+              "email": "a@a",
+              "pct": 20
+            })
     
           })
 

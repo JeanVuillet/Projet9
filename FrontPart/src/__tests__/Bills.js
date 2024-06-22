@@ -23,10 +23,13 @@ jest.mock("../app/store", () => mockStore);
 jest.mock("../containers/Logout.js", () => {
   return jest.fn().mockImplementation(() => {
     return { init: jest.fn() };
+    //ALo
   });
 });
 const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-beforeEach(() => {
+
+beforeEach(async() => {
+  await waitFor(()=>screen.getByTestId('tbody'))
   document.body.innerHTML = "";
 
   // SIMULATION DU LOCALSTORAGE

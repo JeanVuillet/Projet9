@@ -89,6 +89,7 @@ export default class NewBill {
     if (!this.fileName) return;
    
     this.updateBill(bill);
+
     this.onNavigate(ROUTES_PATH['Bills']);
   };
 
@@ -99,6 +100,7 @@ export default class NewBill {
         .bills()
         .update({data: JSON.stringify(bill), selector: this.billId})
         .then(() => {
+       
           this.onNavigate(ROUTES_PATH['Bills']);
         })
         .catch(error => console.error(error));

@@ -23,6 +23,7 @@ import NewBill from "../containers/NewBill.js";
 jest.mock("../app/store", () => mockStore);
 
 beforeEach(async() => {
+     jest.clearAllMocks()
 	//cette methode permet d espionner la methode create de bills du mockstore
 	jest.spyOn(mockStore.bills(), "create");
 	
@@ -47,8 +48,6 @@ beforeEach(async() => {
 
 	// Changement de l'URL courant et mise à jour du contenu de la page grâce au router
 	window.onNavigate(ROUTES_PATH.NewBill);
-	// Obtenir la référence de l'instance
-
 	document.body.innerHTML;
 });
 
@@ -95,7 +94,7 @@ describe("Given I am connected as an employee", () => {
 
 				describe("when I change the file and the extension is correct", () => {
 					test("then an object with correct values should be created", async () => {
-						// Espionner la méthode create de mockedBills
+				
 
 						// Attendre que la page NewBill soit complètement chargée
 						await waitFor(() => {
@@ -250,30 +249,29 @@ describe("Given I am connected as an employee", () => {
 					await waitFor(()=>		expect(instance.handleSubmit).toHaveBeenCalled())
 
 					await waitFor(()=>expect(instance.updateBill).toHaveBeenCalledWith(bill))
-					
+
 // attendre le retour a la page bills
            let  element=await document.getElementById('data-table');
     
 
-             debugger;
+
              expect (element).toBeTruthy();
            
  
-
+		// ligne pas logique mais indispensable
+		window.onNavigate(ROUTES_PATH.NewBill);
+	
 
           });
-  //test pour nettoyer
-					test("test", async () => {
-						document.body.innerHTML;
-					
-					});
-					test("the new object should be sent to dataBase and the response sould be the mocked response", async () => {
-						document.body.innerHTML;
-		
-						jest.spyOn(mockStore.bills(), "update");
-						// attente de l implementation du dom
 
-						await waitFor(() => screen.getByTestId("expense-type"));
+					test("the new object should be sent to dataBase and the response sould be the mocked response", async () => {
+					
+			
+
+
+						jest.spyOn(mockStore.bills(), "update");
+			
+	
 						await waitFor(() => {
 							screen.getAllByText("Envoyer");
 						});

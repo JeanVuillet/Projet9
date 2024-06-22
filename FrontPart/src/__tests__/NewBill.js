@@ -49,6 +49,7 @@ beforeEach(async() => {
 
 	// Changement de l'URL courant et mise à jour du contenu de la page grâce au router
 	window.onNavigate(ROUTES_PATH.NewBill);
+	let  element=await screen.getAllByText('Envoyer');
 	document.body.innerHTML;
 });
 
@@ -258,7 +259,9 @@ describe("Given I am connected as an employee", () => {
 
 
              expect (element).toBeTruthy();
-           
+	window.location.href
+document.body.innerHTML;
+	debugger;
  //LA LIGNE BIZARRE
 		// retour sur la page NewBill
 		window.onNavigate(ROUTES_PATH.NewBill);
@@ -293,7 +296,7 @@ describe("Given I am connected as an employee", () => {
 							myFileInput,
 							new File([""], "correctfile.png", { type: "application/png" })
 						);
-					
+		
 						instance.updateBill();
 
 						await waitFor(() =>

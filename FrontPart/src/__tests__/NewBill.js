@@ -250,7 +250,8 @@ describe("Given I am connected as an employee", () => {
 					await waitFor(()=>		expect(instance.handleSubmit).toHaveBeenCalled())
 
 					await waitFor(()=>expect(instance.updateBill).toHaveBeenCalledWith(bill))
-
+					
+// attendre le retour a la page bills
            let  element=await document.getElementById('data-table');
     
 

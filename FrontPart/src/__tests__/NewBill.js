@@ -23,6 +23,7 @@ import NewBill from "../containers/NewBill.js";
 jest.mock("../app/store", () => mockStore);
 
 beforeEach(async() => {
+
      jest.clearAllMocks()
 	//cette methode permet d espionner la methode create de bills du mockstore
 	jest.spyOn(mockStore.bills(), "create");
@@ -243,7 +244,7 @@ describe("Given I am connected as an employee", () => {
 						};
 
 						fireEvent.submit(form);
-            await new Promise(process.nextTick);
+
 						document.body.innerHTML;
 					await waitFor(()=>	{expect(instance.handleSubmit).toHaveBeenCalled()})
 				
@@ -258,8 +259,8 @@ describe("Given I am connected as an employee", () => {
 
              expect (element).toBeTruthy();
            
- 
-		// ligne pas logique mais indispensable
+ //LA LIGNE BIZARRE
+		// retour sur la page NewBill
 		window.onNavigate(ROUTES_PATH.NewBill);
 	
 

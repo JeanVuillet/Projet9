@@ -119,11 +119,12 @@ describe("Given I am connected as an employee", () => {
 						formData.append("email", "a@a");
 
 						//attendre que la fonction soit appellee
+					await	waitFor(
 						() =>
 							expect(mockStore.bills().create).toHaveBeenCalledWith({
 								data: formData,
 								headers: { noContentType: true },
-							});
+							}))
 					});
 
           test("then the fill should be send to dataBase", async () => {

@@ -22,36 +22,36 @@ import NewBill from "../containers/NewBill.js";
 //cette methode permet de lancer mokStore a la place de store
 jest.mock("../app/store", () => mockStore);
 
-beforeEach(async() => {
-
-     jest.clearAllMocks()
-	//cette methode permet d espionner la methode create de bills du mockstore
+beforeEach(async () => {
+	jest.clearAllMocks();
+  
+	// Cette méthode permet d'espionner la méthode create de bills du mockstore
 	jest.spyOn(mockStore.bills(), "create");
-	
+  
 	document.body.innerHTML = "";
-
+  
 	// SIMULATION DU LOCALSTORAGE
-
-	// Mock the store
-
 	Object.defineProperty(window, "localStorage", { value: localStorageMock });
 	window.localStorage.clear();
 	window.localStorage.setItem(
-		"user",
-		JSON.stringify({ type: "Employee", email: "a@a" })
+	  "user",
+	  JSON.stringify({ type: "Employee", email: "a@a" })
 	);
-
+  
 	// SIMULATION DU DOM
 	const root = document.createElement("div");
 	root.setAttribute("id", "root");
 	document.body.append(root);
 	router();
-
-	// Changement de l'URL courant et mise à jour du contenu de la page grâce au router
+  
+	// Attendre la resolution des promesses en cours 
+	await new Promise(resolve => setTimeout(resolve, 50));
+  
+	// Naviguer de nouveau après le délai
 	window.onNavigate(ROUTES_PATH.NewBill);
-	let  element=await screen.getAllByText('Envoyer');
-	document.body.innerHTML;
-});
+
+  
+  });
 
 describe("Given I am connected as an employee", () => {
 	describe("When I am on NewBill Page", () => {
@@ -261,12 +261,7 @@ describe("Given I am connected as an employee", () => {
              expect (element).toBeTruthy();
 	window.location.href
 document.body.innerHTML;
-	debugger;
- //LA LIGNE BIZARRE
-		// retour sur la page NewBill
-		window.onNavigate(ROUTES_PATH.NewBill);
 	
-
           });
 
 					test("the new object should be sent to dataBase and the response sould be the mocked response", async () => {

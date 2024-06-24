@@ -41,13 +41,13 @@ export default class NewBill {
     }
     else{
     const formData = new FormData();
-    var user=localStorage.getItem("user");
-    user=JSON.parse(user);
-    if(!user){
-      user=JSON.parse(user);
-   }
-    const email = JSON.parse(user).email;
 
+       let email = JSON.parse(localStorage.getItem("user")).email
+       if (!email){
+        const user=localStorage.getItem("user");
+        email= JSON.parse(JSON.parse(user)).email
+       }
+debugger
     formData.append('file', file);
     formData.append('email', email);
 
@@ -71,9 +71,16 @@ export default class NewBill {
 
   handleSubmit = e => {
     e.preventDefault();
-    const user=localStorage.getItem("user");
-    const email =  JSON.parse(JSON.parse(user)).email;
-
+    let user=localStorage.getItem("user");
+    // user =JSON.parse(user);
+    // if (! JSON.parse(user))
+    //   {user=JSON.parse(user)}
+    let email = JSON.parse(localStorage.getItem("user")).email
+    if (!email){
+      const user=localStorage.getItem("user");
+      email= JSON.parse(JSON.parse(user)).email
+     }
+     debugger;
     const bill = {
       email,
       type: e.target.querySelector(`select[data-testid="expense-type"]`).value,

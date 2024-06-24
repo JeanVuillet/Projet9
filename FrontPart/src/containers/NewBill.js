@@ -41,9 +41,12 @@ export default class NewBill {
     }
     else{
     const formData = new FormData();
-    const user=localStorage.getItem("user");
-
-    const email = JSON.parse(JSON.parse(user)).email;
+    var user=localStorage.getItem("user");
+    user=JSON.parse(user);
+    if(!user){
+      user=JSON.parse(user);
+   }
+    const email = JSON.parse(user).email;
 
     formData.append('file', file);
     formData.append('email', email);
@@ -105,6 +108,7 @@ export default class NewBill {
         })
         .catch(error => console.error(error));
     }
+  
   };
 
   fileValidation = file => {

@@ -50,9 +50,11 @@ export default class Login {
 		e.preventDefault();
 		const user = {
 			type: "Admin",
+      //ici l erreur il y avait employe a la place d'admin dans l email 
 			email: e.target.querySelector(`input[data-testid="admin-email-input"]`)
 				.value,
 			password: e.target.querySelector(
+        //ici erreur : il y avait employe au lieu d admin
 				`input[data-testid="admin-password-input"]`
 			).value,
 			status: "connected",

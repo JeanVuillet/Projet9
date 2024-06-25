@@ -60,6 +60,8 @@ export default class {
 						}
 					});
 					console.log("length", bills.length);
+          ////////////////////////
+          //BUG 2 ICI
 
 					bills = bills.sort(function (a, b) {
 						// Convertir les chaînes de caractères en objets Date

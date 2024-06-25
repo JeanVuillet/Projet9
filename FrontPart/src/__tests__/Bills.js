@@ -17,6 +17,7 @@ import NewBill from "../containers/NewBill.js";
 import store from "../__mocks__/store.js";
 
 // Mock the store
+//cettte ligne permet de lancer mokStore a la place de store
 jest.mock("../app/store", () => mockStore);
 
 // Mock the Logout class
@@ -58,12 +59,19 @@ beforeEach(async () => {
 
 describe("Given I am connected as an employee", () => {
 	describe("When I am on Bills Page", () => {
-		test("Then bill icon in vertical layout should be highlighted", async () => {
-			await waitFor(() => screen.getByTestId("icon-window"));
-			const windowIcon = screen.getByTestId("icon-window");
-			expect(windowIcon.classList.contains("active-icon")).toBe(true);
-		});
-
+    describe("when API works",()=>{
+      test("Then bill icon in vertical layout should be highlighted", async () => {
+        await waitFor(() => screen.getByTestId("icon-window"));
+        const windowIcon = screen.getByTestId("icon-window");
+        expect(windowIcon.classList.contains("active-icon")).toBe(true);
+      });
+      //test API
+      test("then the router should fetches bills from mock API GET", async () => {
+        await waitFor(() => {
+          const result = screen.getAllByText("test1");
+          expect(result).toBeTruthy();
+        });
+      });
 		test("Then bills should be ordered from earliest to latest", () => {
 			// BillsUI charge les différentes factures dans la page
 			document.body.innerHTML = BillsUI({ data: bills });
@@ -81,77 +89,74 @@ describe("Given I am connected as an employee", () => {
 			expect(dates).toEqual(sortedData);
 		});
 
-		test("when newBillsMethod is called I should navigate to newBills page", async () => {
-			document.body.innerHTML = BillsUI({ data: bills });
-			await waitFor(() => screen.getByTestId("btn-new-bill"));
-			const newBillsButton = screen.getByTestId("btn-new-bill");
+  test("Then when newBillsMethod is called I should navigate to newBills page", async () => {
+    document.body.innerHTML = BillsUI({ data: bills });
+    await waitFor(() => screen.getByTestId("btn-new-bill"));
+    const newBillsButton = screen.getByTestId("btn-new-bill");
 
-			const onNavigate = jest.fn((path) => {
-				window.location.href = `http://localhost${path}`;
-			});
+    const onNavigate = jest.fn((path) => {
+      window.location.href = `http://localhost${path}`;
+    });
 
-			const billsInstance = new Bills({
-				document,
-				onNavigate,
-				store: mockStore,
-				localStorage: window.localStorage,
-			});
+    const billsInstance = new Bills({
+      document,
+      onNavigate,
+      store: mockStore,
+      localStorage: window.localStorage,
+    });
 
-			const eventListenerFunction = jest.fn((e) =>
-				billsInstance.handleClickNewBill()
-			);
+    const eventListenerFunction = jest.fn((e) =>
+      billsInstance.handleClickNewBill()
+    );
 
-			newBillsButton.addEventListener("click", eventListenerFunction);
+    newBillsButton.addEventListener("click", eventListenerFunction);
 
-			userEvent.click(newBillsButton);
+    userEvent.click(newBillsButton);
 
-			expect(eventListenerFunction).toHaveBeenCalled();
+    expect(eventListenerFunction).toHaveBeenCalled();
 
-			await waitFor(
-				() => window.location.href === "http://localhost/#employee/bill/new"
-			);
+    await waitFor(
+      () => window.location.href === "http://localhost/#employee/bill/new"
+    );
 
-			expect(window.location.href).toBe("http://localhost/#employee/bill/new");
-		});
+    expect(window.location.href).toBe("http://localhost/#employee/bill/new");
+  });
+    })
 	});
+
+// TEST DE L'API
+  describe("When API fails", () => {
+    test("fetches bills from an API and fails with 404 message error", async () => {
+      mockStore.bills.mockImplementationOnce(() => {
+        return {
+          list: () => {
+            return Promise.reject(new Error("Erreur 404"));
+          },
+        };
+      });
+      window.onNavigate(ROUTES_PATH.Bills);
+      //on attend la promesse apres que le dome soit cree
+      //(nextTick s execute apres le code synchrone
+      //await permet d attendre la resolution de la promesse
+      await new Promise(process.nextTick);
+      const message = await screen.getByText(/Erreur 404/);
+      expect(message).toBeTruthy();
+    });
+    test("fetches messages from an API and fails with 500 message error", async () => {
+      mockStore.bills.mockImplementationOnce(() => {
+        return {
+          list: () => {
+            return Promise.reject(new Error("Erreur 500"));
+          },
+        };
+      });
+  
+      window.onNavigate(ROUTES_PATH.Bills);
+      await new Promise(process.nextTick);
+      const message = await screen.getByText(/Erreur 500/);
+      expect(message).toBeTruthy();
+    });
+  });
 });
 
-// TEST D'INTEGRATION GET DE BILLS
-describe("When I navigate to billList", () => {
-	test("fetches bills from mock API GET", async () => {
-		await waitFor(() => {
-			const result = screen.getAllByText("Hôtel et logement");
-			expect(result).toBeTruthy();
-		});
-	});
-	test("fetches bills from an API and fails with 404 message error", async () => {
-		mockStore.bills.mockImplementationOnce(() => {
-			return {
-				list: () => {
-					return Promise.reject(new Error("Erreur 404"));
-				},
-			};
-		});
-		window.onNavigate(ROUTES_PATH.Bills);
-		//on attend la promesse apres que le dome soit cree
-		//(nextTick s execute apres le code synchrone
-		//await permet d attendre la resolution de la promesse
-		await new Promise(process.nextTick);
-		const message = await screen.getByText(/Erreur 404/);
-		expect(message).toBeTruthy();
-	});
-	test("fetches messages from an API and fails with 500 message error", async () => {
-		mockStore.bills.mockImplementationOnce(() => {
-			return {
-				list: () => {
-					return Promise.reject(new Error("Erreur 500"));
-				},
-			};
-		});
 
-		window.onNavigate(ROUTES_PATH.Bills);
-		await new Promise(process.nextTick);
-		const message = await screen.getByText(/Erreur 500/);
-		expect(message).toBeTruthy();
-	});
-});

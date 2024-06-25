@@ -20,27 +20,12 @@ const row = (bill) => {
 };
 
 const rows = (data) => {
-	if (data) {
-		var dataSorted = data.sort(function (a, b) {
-			// Convertir les chaînes de caractères en objets Date
-
-			let dateB = new Date(b.date);
-			let dateA = new Date(a.date);
-			// Comparer les objets Date
-			if (dateA < dateB) {
-				return 1;
-			} else {
-				return -1;
-			}
-		});
-		return dataSorted && data.length
-			? dataSorted.map((bill) => row(bill)).join("")
-			: "";
-	} else {
-		return data && data.length ? data.map((bill) => row(bill)).join("") : "";
-	}
+  if (data) {
+      return data.map((bill) => row(bill)).join("");
+  } else {
+      return "";
+  }
 };
-
 export default ({ data: bills, loading, error }) => {
 	const modal = () => `
     <div class="modal fade" id="modaleFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

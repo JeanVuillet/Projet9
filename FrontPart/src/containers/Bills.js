@@ -66,13 +66,14 @@ export default class {
 
 						let dateB = new Date(b.date);
 						let dateA = new Date(a.date);
-						// Comparer les objets Date
+						// Comparer les objets Date pour renvoyer les dates triees
 						if (dateA < dateB) {
 							return -1;
 						} else {
 							return 1;
 						}
 					});
+          // mise des dates au bon formant grace a foratDate de App/format.js
 					bills.forEach((element) => {
 						element.date = formatDate(element.date);
 					});

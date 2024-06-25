@@ -31,6 +31,8 @@ export default class NewBill {
 		if (errorDiv) {
 			errorDiv.remove();
 		}
+    //utilisation de la methode fileValidation sur le fichier selectionner
+    //pour certifier qu il est au bon format
 		if (!this.fileValidation(file) && !errorDiv) {
 			fileInput.value = "";
 			let errorDiv = this.document.createElement("div");
@@ -48,7 +50,7 @@ export default class NewBill {
 				const user = localStorage.getItem("user");
 				email = JSON.parse(JSON.parse(user)).email;
 			}
-			debugger;
+
 			formData.append("file", file);
 			formData.append("email", email);
 
@@ -81,7 +83,7 @@ export default class NewBill {
 			const user = localStorage.getItem("user");
 			email = JSON.parse(JSON.parse(user)).email;
 		}
-		debugger;
+
 		const bill = {
 			email,
 			type: e.target.querySelector(`select[data-testid="expense-type"]`).value,

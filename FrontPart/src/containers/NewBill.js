@@ -75,9 +75,7 @@ export default class NewBill {
 	handleSubmit = (e) => {
 		e.preventDefault();
 		let user = localStorage.getItem("user");
-		// user =JSON.parse(user);
-		// if (! JSON.parse(user))
-		//   {user=JSON.parse(user)}
+
 		let email = JSON.parse(localStorage.getItem("user")).email;
 		if (!email) {
 			const user = localStorage.getItem("user");

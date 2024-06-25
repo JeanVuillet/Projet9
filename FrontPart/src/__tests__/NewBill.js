@@ -212,7 +212,7 @@ describe("Given I am connected as an employee", () => {
 						});
 						// Initialiser le tableau de messages
 						// Attendre que le `catch` soit exécuté et que le message d'erreur soit affiché dans la console
-				
+						debugger;
 					});
 				});
 			});

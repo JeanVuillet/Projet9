@@ -29,7 +29,7 @@ jest.mock("../containers/Logout.js", () => {
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 beforeEach(async () => {
-	await waitFor(() => screen.getByTestId("tbody"));
+	// await waitFor(() => screen.getAllByText ("Nouvelle note de frais"));
 	document.body.innerHTML = "";
 
 	// SIMULATION DU LOCALSTORAGE
@@ -49,9 +49,11 @@ beforeEach(async () => {
 	root.setAttribute("id", "root");
 	document.body.append(root);
 	router();
-
+  
 	// Changement de l'URL courant et mise à jour du contenu de la page grâce au router
 	window.onNavigate(ROUTES_PATH.Bills);
+  await waitFor(()=>screen.getAllByText("Nouvelle note de frais"))
+
 });
 
 describe("Given I am connected as an employee", () => {

@@ -61,7 +61,6 @@ export default class {
 					});
 					console.log("length", bills.length);
 
-          //CORRECTION DU BUG 2
 					bills = bills.sort(function (a, b) {
 						// Convertir les chaînes de caractères en objets Date
 
@@ -74,7 +73,8 @@ export default class {
 							return 1;
 						}
 					});
-          // mise des dates au bon formant grace a foratDate de App/format.js
+          // mise des dates au bon formant grace a foratDate de A
+          debugger;
 					bills.forEach((element) => {
 						element.date = formatDate(element.date);
 					});

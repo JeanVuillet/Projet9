@@ -312,58 +312,60 @@ describe("Given I am connected as an employee", () => {
 
 			expect(element).toBeTruthy();
 		});
-		describe('and API works fine',()=>{
-		test("the new object should be sent to dataBase and the response sould be the mocked response", async () => {
-			jest.spyOn(mockStore.bills(), "update");
+		describe("and API works fine", () => {
+			test("the new object should be sent to dataBase and the response sould be the mocked response", async () => {
+				jest.spyOn(mockStore.bills(), "update");
 
-			await waitFor(() => {
-				screen.getAllByText("Envoyer");
-			});
-			document.body.innerHTML;
+				await waitFor(() => {
+					screen.getAllByText("Envoyer");
+				});
+				document.body.innerHTML;
 
-			//creation d une instance newBill
-			const instance = new NewBill({
-				document,
-				onNavigate,
-				store,
-				localStorage,
-			});
+				//creation d une instance newBill
+				const instance = new NewBill({
+					document,
+					onNavigate,
+					store,
+					localStorage,
+				});
 
-			const myFileInput = screen.getByTestId("file");
+				const myFileInput = screen.getByTestId("file");
 
-			userEvent.upload(
-				myFileInput,
-				new File([""], "correctfile.png", { type: "application/png" })
-			);
+				userEvent.upload(
+					myFileInput,
+					new File([""], "correctfile.png", { type: "application/png" })
+				);
 
-			instance.updateBill();
+				instance.updateBill();
 
-			await waitFor(() => expect(mockStore.bills().update).toHaveBeenCalled());
+				await waitFor(() =>
+					expect(mockStore.bills().update).toHaveBeenCalled()
+				);
 
-			// Attendre que la promesse arrive  (Récupérer la promesse résolue)
-			const result = await mockStore.bills().update.mock.results[0].value;
+				// Attendre que la promesse arrive  (Récupérer la promesse résolue)
+				const result = await mockStore.bills().update.mock.results[0].value;
 
-			expect(mockStore.bills().update).toHaveBeenCalled();
-			expect(result).toEqual({
-				id: "47qAXb6fIm2zOKkLzMro",
-				vat: "80",
-				fileUrl:
-					"https://firebasestorage.googleapis.com/v0/b/billable-677b6.a…f-1.jpg?alt=media&token=c1640e12-a24b-4b11-ae52-529112e9602a",
-				status: "pending",
-				type: "Hôtel et logement",
-				commentary: "séminaire billed",
-				name: "encore",
-				fileName: "preview-facture-free-201801-pdf-1.jpg",
-				date: "2004-04-04",
-				amount: 400,
-				commentAdmin: "ok",
-				email: "a@a",
-				pct: 20,
+				expect(mockStore.bills().update).toHaveBeenCalled();
+				expect(result).toEqual({
+					id: "47qAXb6fIm2zOKkLzMro",
+					vat: "80",
+					fileUrl:
+						"https://firebasestorage.googleapis.com/v0/b/billable-677b6.a…f-1.jpg?alt=media&token=c1640e12-a24b-4b11-ae52-529112e9602a",
+					status: "pending",
+					type: "Hôtel et logement",
+					commentary: "séminaire billed",
+					name: "encore",
+					fileName: "preview-facture-free-201801-pdf-1.jpg",
+					date: "2004-04-04",
+					amount: 400,
+					commentAdmin: "ok",
+					email: "a@a",
+					pct: 20,
+				});
 			});
 		});
-		})
-		describe('I submit formular and API failes', () => {
-			test('Api fails on 404  on submition: a new error 404 should be created ', async () => {
+		describe("I submit formular and API failes", () => {
+			test("Api fails on 404  on submition: a new error 404 should be created ", async () => {
 				const postSpy = jest.spyOn(console, "error");
 				mockStore.bills.mockImplementationOnce(() => {
 					return {
@@ -385,10 +387,6 @@ describe("Given I am connected as an employee", () => {
 					localStorage,
 				});
 
-
-
-		
-
 				instance.updateBill();
 
 				await waitFor(() => {
@@ -396,7 +394,7 @@ describe("Given I am connected as an employee", () => {
 				});
 			});
 
-			test('Api fails on 500  on submition: a new error 500 should be created ', async () => {
+			test("Api fails on 500  on submition: a new error 500 should be created ", async () => {
 				const postSpy = jest.spyOn(console, "error");
 				mockStore.bills.mockImplementationOnce(() => {
 					return {
@@ -418,10 +416,6 @@ describe("Given I am connected as an employee", () => {
 					localStorage,
 				});
 
-		
-
-		
-
 				instance.updateBill();
 
 				await waitFor(() => {
@@ -429,9 +423,6 @@ describe("Given I am connected as an employee", () => {
 				});
 			});
 		});
-	
-
 	});
 	//ce test permet de nettoyer????
-
-})
+});

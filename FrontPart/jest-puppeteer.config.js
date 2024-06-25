@@ -1,6 +1,6 @@
 module.exports = {
-    launch: {
-        headless: true
-    }
+	launch: {
+		headless: true,
+	},
 };
-console.log('pupetteer working');
+console.log("pupetteer working");

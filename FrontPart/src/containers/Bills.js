@@ -76,7 +76,7 @@ export default class {
 						}
 					});
           // mise des dates au bon formant grace a foratDate de A
-          debugger;
+         
 					bills.forEach((element) => {
 						element.date = formatDate(element.date);
 					});

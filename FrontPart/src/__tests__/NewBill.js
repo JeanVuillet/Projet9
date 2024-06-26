@@ -92,7 +92,32 @@ describe("Given I am connected as an employee", () => {
 
 					expect(error).toBeTruthy();
 				});
-				test("Then if the extension is correc, an object with correct values should be created", async () => {
+				test("then if the extension is incorrect and i correct it , the errorDiv should disappear", async () => {
+					// Simuler le changement de fichier avec une extension incorrecte
+					const fileInput = screen.getByTestId("file");
+
+					userEvent.upload(
+						fileInput,
+						new File([], "myfile.pdf", { type: "application/pdf" })
+					);
+					let error;
+					await waitFor(() => {
+						error = screen.getByTestId("errorDiv");
+					});
+					// Simuler la correction de l extension
+					userEvent.upload(
+						fileInput,
+						new File([""], "correctfile.png", { type: "application/png" })
+					);
+					//verifier l absence du div
+
+					await waitFor(() => {
+						error = screen.queryByTestId("errorDiv");
+					});
+
+					expect(error).toBeFalsy();
+				});
+				test("Then if the extension is correc, an object with correct values should be created ", async () => {
 					// Attendre que la page NewBill soit complètement chargée
 					await waitFor(() => {
 						const fileInput = screen.getByTestId("file");
@@ -122,6 +147,7 @@ describe("Given I am connected as an employee", () => {
 							headers: { noContentType: true },
 						})
 					);
+					debugger;
 				});
 				test("Then, if the extension is correct then the new fill should be send to dataBase", async () => {
 					// Attendre que la page NewBill soit complètement chargée
@@ -204,8 +230,8 @@ describe("Given I am connected as an employee", () => {
 			});
 		});
 	});
-		// III SOUMISSION DU FORMULAIRE
-		describe("when i submit the formular ", () => {
+	// III SOUMISSION DU FORMULAIRE
+	describe("when i submit the formular ", () => {
 		describe("when api works fine ", () => {
 			test(" Then a newBill object with correct values  should be created", async () => {
 				document.body.innerHTML;
@@ -410,5 +436,3 @@ describe("Given I am connected as an employee", () => {
 		});
 	});
 });
-
-//ce test permet de nettoyer????

@@ -50,113 +50,110 @@ beforeEach(async () => {
 	root.setAttribute("id", "root");
 	document.body.append(root);
 	router();
-  
+
 	// Changement de l'URL courant et mise à jour du contenu de la page grâce au router
 	window.onNavigate(ROUTES_PATH.Bills);
-  await waitFor(()=>screen.getAllByText("Nouvelle note de frais"))
-
+	await waitFor(() => screen.getAllByText("Nouvelle note de frais"));
 });
 
 describe("Given I am connected as an employee", () => {
 	describe("When I am on Bills Page", () => {
-    describe("when API works",()=>{
-      test("Then bill icon in vertical layout should be highlighted", async () => {
-        await waitFor(() => screen.getByTestId("icon-window"));
-        const windowIcon = screen.getByTestId("icon-window");
-        expect(windowIcon.classList.contains("active-icon")).toBe(true);
-      });
-      //test API
-      test("then the router should fetches bills from mock API GET", async () => {
-        await waitFor(() => {
-          const result = screen.getAllByText("test1");
-          expect(result).toBeTruthy();
-        });
-      });
-		test("Then bills should be ordered from earliest to latest", () => {
-			// BillsUI charge les différentes factures dans la page
-			document.body.innerHTML = BillsUI({ data: bills });
-
-			const dates = screen
-				.getAllByText(/^\d{4}-\d{2}-\d{2}$/)
-				.map((a) => a.innerHTML);
-
-			const sortedData = dates.sort((a, b) => {
-				a > b ? 1 : -1;
+		describe("when API works", () => {
+			test("Then bill icon in vertical layout should be highlighted", async () => {
+				await waitFor(() => screen.getByTestId("icon-window"));
+				const windowIcon = screen.getByTestId("icon-window");
+				expect(windowIcon.classList.contains("active-icon")).toBe(true);
 			});
-			// const antiChrono = (a, b) => (a < b ? 1 : -1);
-			// const datesSorted = [...dates].sort(antiChrono);
+			//test API
+			test("then the router should fetches bills from mock API GET", async () => {
+				await waitFor(() => {
+					const result = screen.getAllByText("test1");
+					expect(result).toBeTruthy();
+				});
+			});
+			test("Then bills should be ordered from earliest to latest", () => {
+				// BillsUI charge les différentes factures dans la page
+				document.body.innerHTML = BillsUI({ data: bills });
 
-			expect(dates).toEqual(sortedData);
+				const dates = screen
+					.getAllByText(/^\d{4}-\d{2}-\d{2}$/)
+					.map((a) => a.innerHTML);
+
+				const sortedData = dates.sort((a, b) => {
+					a > b ? 1 : -1;
+				});
+
+				expect(dates).toEqual(sortedData);
+			});
+
+			test("Then when newBillsMethod is called I should navigate to newBills page", async () => {
+				document.body.innerHTML = BillsUI({ data: bills });
+				await waitFor(() => screen.getByTestId("btn-new-bill"));
+				const newBillsButton = screen.getByTestId("btn-new-bill");
+
+				const onNavigate = jest.fn((path) => {
+					window.location.href = `http://localhost${path}`;
+				});
+
+				const billsInstance = new Bills({
+					document,
+					onNavigate,
+					store: mockStore,
+					localStorage: window.localStorage,
+				});
+
+				const eventListenerFunction = jest.fn((e) =>
+					billsInstance.handleClickNewBill()
+				);
+
+				newBillsButton.addEventListener("click", eventListenerFunction);
+
+				userEvent.click(newBillsButton);
+
+				expect(eventListenerFunction).toHaveBeenCalled();
+
+				await waitFor(
+					() => window.location.href === "http://localhost/#employee/bill/new"
+				);
+
+				expect(window.location.href).toBe(
+					"http://localhost/#employee/bill/new"
+				);
+			});
 		});
-
-  test("Then when newBillsMethod is called I should navigate to newBills page", async () => {
-    document.body.innerHTML = BillsUI({ data: bills });
-    await waitFor(() => screen.getByTestId("btn-new-bill"));
-    const newBillsButton = screen.getByTestId("btn-new-bill");
-
-    const onNavigate = jest.fn((path) => {
-      window.location.href = `http://localhost${path}`;
-    });
-
-    const billsInstance = new Bills({
-      document,
-      onNavigate,
-      store: mockStore,
-      localStorage: window.localStorage,
-    });
-
-    const eventListenerFunction = jest.fn((e) =>
-      billsInstance.handleClickNewBill()
-    );
-
-    newBillsButton.addEventListener("click", eventListenerFunction);
-
-    userEvent.click(newBillsButton);
-
-    expect(eventListenerFunction).toHaveBeenCalled();
-
-    await waitFor(
-      () => window.location.href === "http://localhost/#employee/bill/new"
-    );
-
-    expect(window.location.href).toBe("http://localhost/#employee/bill/new");
-  });
-    })
 	});
 
-// TEST DE L'API
-  describe("When API fails", () => {
-    test("fetches bills from an API and fails with 404 message error", async () => {
-      mockStore.bills.mockImplementationOnce(() => {
-        return {
-          list: () => {
-            return Promise.reject(new Error("Erreur 404"));
-          },
-        };
-      });
-      window.onNavigate(ROUTES_PATH.Bills);
-      //on attend la promesse apres que le dome soit cree
-      //(nextTick s execute apres le code synchrone
-      //await permet d attendre la resolution de la promesse
-      await new Promise(process.nextTick);
-      const message = await screen.getByText(/Erreur 404/);
-      expect(message).toBeTruthy();
-    });
-    test("fetches messages from an API and fails with 500 message error", async () => {
-      mockStore.bills.mockImplementationOnce(() => {
-        return {
-          list: () => {
-            return Promise.reject(new Error("Erreur 500"));
-          },
-        };
-      });
-  
-      window.onNavigate(ROUTES_PATH.Bills);
-      await new Promise(process.nextTick);
-      const message = await screen.getByText(/Erreur 500/);
-      expect(message).toBeTruthy();
-    });
-  });
+	// TEST DE L'API
+	describe("When API fails", () => {
+		test("fetches bills from an API and fails with 404 message error", async () => {
+			mockStore.bills.mockImplementationOnce(() => {
+				return {
+					list: () => {
+						return Promise.reject(new Error("Erreur 404"));
+					},
+				};
+			});
+			window.onNavigate(ROUTES_PATH.Bills);
+			//on attend la promesse apres que le dome soit cree
+			//(nextTick s execute apres le code synchrone
+			//await permet d attendre la resolution de la promesse
+			await new Promise(process.nextTick);
+			const message = await screen.getByText(/Erreur 404/);
+			expect(message).toBeTruthy();
+		});
+		test("fetches messages from an API and fails with 500 message error", async () => {
+			mockStore.bills.mockImplementationOnce(() => {
+				return {
+					list: () => {
+						return Promise.reject(new Error("Erreur 500"));
+					},
+				};
+			});
+
+			window.onNavigate(ROUTES_PATH.Bills);
+			await new Promise(process.nextTick);
+			const message = await screen.getByText(/Erreur 500/);
+			expect(message).toBeTruthy();
+		});
+	});
 });
-
-

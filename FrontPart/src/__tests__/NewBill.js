@@ -147,7 +147,7 @@ describe("Given I am connected as an employee", () => {
 							headers: { noContentType: true },
 						})
 					);
-					debugger;
+
 				});
 				test("Then, if the extension is correct then the new fill should be send to dataBase", async () => {
 					// Attendre que la page NewBill soit complètement chargée
